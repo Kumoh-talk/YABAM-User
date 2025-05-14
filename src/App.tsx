@@ -6,7 +6,6 @@ import StoreDetail from "./pages/StoreDetail/StoreDetail";
 // import QRscan from "./pages/QRscan/QRscan";
 import OrderMenu from "./pages/OrderMenu/OrderMenu";
 import OrderMenuItem from "./pages/OrderMenuItem/OrderMenuItem";
-import StoreHome from "./pages/StoreHome/StoreHome";
 import CallStaffModal from "./components/CallStaffModal/CallStaffModal";
 
 function App() {
@@ -23,10 +22,8 @@ function App() {
     <div className="container">
       <nav>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/storeDetail" element={<StoreDetail />} />
-          {/* <Route path="/qrScan" element={<QRscan />} /> */}
-          <Route path="/" element={<StoreHome />} />
           <Route path="/orderMenu" element={<OrderMenu />} />
           <Route path="/orderMenuItem" element={<OrderMenuItem />} />
           <Route path="/callStaff" element={<CallStaffModal />} />
