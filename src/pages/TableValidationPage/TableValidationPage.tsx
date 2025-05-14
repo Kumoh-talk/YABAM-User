@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getNonAdjustReceipt, createReceipt } from '../../api/receipt';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TableValidationPage = () => {
   const [searchParams] = useSearchParams();
@@ -9,9 +11,8 @@ const TableValidationPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!tableId || !storeId) {
-      // 필수 파라미터 누락 시 에러 페이지 이동
-      navigate('/error');
+    if (!tableId || !storeId || isNaN(tableId) || isNaN(storeId)) {
+      toast.error('올바르지 않은 테이블 정보입니다.');
       return;
     }
 
@@ -19,16 +20,14 @@ const TableValidationPage = () => {
       try {
         const receiptId = await getNonAdjustReceipt(tableId);
         if (receiptId) {
-          // 기존 영수증 → 주문 페이지로 이동
           navigate(`/order?receiptId=${receiptId}&storeId=${storeId}`);
         } else {
-          // 영수증 생성 → 주문 페이지로 이동
           const { id: newReceiptId } = await createReceipt(storeId, tableId);
           navigate(`/order?receiptId=${newReceiptId}&storeId=${storeId}`);
         }
       } catch (error) {
         console.error('영수증 처리 실패:', error);
-        navigate('/error');
+        toast.error('서버와 통신 중 오류가 발생했어요. 다시 시도해주세요.');
       }
     };
 
