@@ -4,8 +4,8 @@ import StoreItem from "../../components/StoreItem/StoreItem";
 const Home = () => {
   return (
     <>
-      <main className={style.scrollArea}>
-        <nav className={style.nav}>
+      <main className={style.home}>
+        <nav className={style.contents}>
           <StoreItem />
           <StoreItem />
           <StoreItem />
