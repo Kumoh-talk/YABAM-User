@@ -1,10 +1,12 @@
 import style from "./OrderMenu.module.css";
+import { IoCloseOutline } from "react-icons/io5";
 import MenuItem from "../../components/MenuItem/MenuItem";
 import Tag from "../../components/Tag/Tag";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getMenuCategories, getMenusByCategory } from "../../api/menu";
 import type { MenuCategory, MenuInfoResponse } from "../../types/Menu";
+import { toast } from 'react-toastify';
 
 const OrderMenu = () => {
   const [searchParams] = useSearchParams();
@@ -28,7 +30,7 @@ const OrderMenu = () => {
         }
         setMenus(menusData);
       } catch (error) {
-        console.error("메뉴 데이터 조회 실패:", error);
+        toast.error("메뉴 데이터를 불러오는데 실패했습니다. 다시 시도해주세요.");
       } finally {
         setLoading(false);
       }
@@ -45,6 +47,7 @@ const OrderMenu = () => {
     <div>
       <header>
         <div className={style.top}>
+          <IoCloseOutline />
           <p className={style.headerTitle}>메뉴 주문하기</p>
         </div>
         <div className={style.bottom}>
