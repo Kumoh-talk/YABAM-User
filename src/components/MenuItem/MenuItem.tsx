@@ -1,20 +1,29 @@
 import { useNavigate } from "react-router-dom";
-import Tag from "../Tag/Tag";
 import style from "./MenuItem.module.css";
+import Tag from "../Tag/Tag";
+import type { MenuInfoResponse } from "../../types/Menu";
 
-const MenuItem = () => {
+type MenuItemProps = {
+  menu: MenuInfoResponse;
+};
+
+const MenuItem = ({ menu }: MenuItemProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className={style.menuItem} onClick={() => navigate("/orderMenuItem")}>
+    <div
+      className={style.menuItem}
+      onClick={() => navigate(`/orderMenuItem?menuId=${menu.menuId}`)}
+    >
       <div className={style.img}>
-        <div>이미지</div>
+        <img src={menu.menuImageUrl} alt={menu.menuName} />
       </div>
       <div className={style.contents}>
-        <Tag content="주인장 추천!" />
-        <h4>우삼겹 야미보끔뱝</h4>
-        <p className={style.description}>우삼겹과 볶음밥의 만남</p>
-        <p className={style.price}>9500원</p>
+        {menu.menuIsRecommended && <Tag content="주인장 추천!" />}
+        <h4>{menu.menuName}</h4>
+        <p className={style.description}>{menu.menuDescription}</p>
+        <p className={style.price}>{menu.menuPrice}원</p>
+        {menu.menuIsSoldOut && <p className={style.soldOut}>품절</p>}
       </div>
     </div>
   );
