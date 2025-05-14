@@ -1,0 +1,22 @@
+.detailMenuItem {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 8px;
+  background-color: white;
+}
+
+.detailMenuItem > h2 {
+  margin: 0;
+}
+
+.price {
+  margin: 0;
+  font-weight: 600;
+}
+
+.description {
+  margin: 0;
+  color: gray;
+  font-size: 14px;
+}

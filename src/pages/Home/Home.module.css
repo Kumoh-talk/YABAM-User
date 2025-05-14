@@ -1,0 +1,35 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.scrollArea {
+  position: fixed;
+  top: 44px;
+  bottom: 58px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  padding: 0 20px;
+  max-width: 400px;
+  overflow-y: auto;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 400px;
+  z-index: 1000;
+  box-sizing: border-box;
+}

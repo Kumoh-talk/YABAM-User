@@ -1,0 +1,67 @@
+.orderMenuItem {
+  display: flex;
+  flex-direction: column;
+  background-color: #ececec;
+  height: 100vh;
+}
+
+.img {
+  background-color: aquamarine;
+  min-height: 200px;
+}
+
+.addMenu {
+  background-color: white;
+  margin-top: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.addMenu p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.addMenu > button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #6299fe;
+  color: white;
+  font-weight: 500;
+}
+
+.counterBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.counter {
+  border-radius: 8px;
+  background-color: #ececec;
+  overflow: hidden;
+  color: #7e7e7e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.counter > button {
+  padding: 4px 14px;
+  border: none;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.verticleLine {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 14px;
+  border-left: 1px solid #c3c3c3;
+}
