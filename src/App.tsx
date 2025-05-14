@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import { Route, Routes } from "react-router-dom";
 import StoreDetail from "./pages/StoreDetail/StoreDetail";
 // import QRscan from "./pages/QRscan/QRscan";
+import TableValidationPage from "./pages/TableValidationPage/TableValidationPage";
 import OrderMenu from "./pages/OrderMenu/OrderMenu";
 import OrderMenuItem from "./pages/OrderMenuItem/OrderMenuItem";
 import CallStaffModal from "./components/CallStaffModal/CallStaffModal";
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/storeDetail" element={<StoreDetail />} />
+          <Route path="/validate-table" element={<TableValidationPage />} />
           <Route path="/orderMenu" element={<OrderMenu />} />
           <Route path="/orderMenuItem" element={<OrderMenuItem />} />
           <Route path="/callStaff" element={<CallStaffModal />} />
