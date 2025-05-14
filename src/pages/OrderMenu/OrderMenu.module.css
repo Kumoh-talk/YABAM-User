@@ -1,7 +1,9 @@
 header {
   display: flex;
   flex-direction: column;
-  background-color: aqua;
+  background-color: aqua; 
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .top {
