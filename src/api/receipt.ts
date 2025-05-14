@@ -1,13 +1,10 @@
 import axios from '../lib/axiosInstance';
 import type { ApiResponse } from '../types/ApiResponse';
+import type { ReceiptIdData } from '../types/Receipt';
 
 /**
  * 대상 테이블의 미정산 영수증 ID를 조회하는 API
  */
-type ReceiptIdData = {
-  receiptId: string;
-};
-
 export const getNonAdjustReceipt = async (tableId: number): Promise<string | null> => {
   const response = await axios.get<ApiResponse<ReceiptIdData>>(
     `/api/v1/table/${tableId}/receipts/non-adjust`
