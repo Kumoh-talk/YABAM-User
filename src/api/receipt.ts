@@ -28,7 +28,6 @@ export const createReceipt = async (
     console.log('영수증 생성 성공:', response.data);
     return response.data;
   } catch (error) {
-    console.error('영수증 생성 실패:', error);
     throw error;
   }
 };
