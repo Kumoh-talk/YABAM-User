@@ -1,17 +1,18 @@
 import axios from '../lib/axiosInstance';
+import type { ApiResponse } from '../types/ApiResponse';
 
 /**
  * 대상 테이블의 미정산 영수증 ID를 조회하는 API
  */
+type ReceiptIdData = {
+  receiptId: string;
+};
+
 export const getNonAdjustReceipt = async (tableId: number): Promise<string | null> => {
-  try {
-    const response = await axios.get<{ id: string | null }>(`/api/v1/table/${tableId}/receipts/non-adjust`);
-    console.log('미정산 영수증 조회 성공:', response.data.id);
-    return response.data.id;
-  } catch (error) {
-    console.error('미정산 영수증 조회 실패:', error);
-    throw error;
-  }
+  const response = await axios.get<ApiResponse<ReceiptIdData>>(
+    `/api/v1/table/${tableId}/receipts/non-adjust`
+  );
+  return response.data?.data?.receiptId ?? null;
 };
 
 /**
@@ -21,13 +22,8 @@ export const createReceipt = async (
   storeId: number,
   tableId: number
 ): Promise<{ id: string }> => {
-  try {
-    const response = await axios.post<{ id: string }>(
-      `/api/v1/receipts?storeId=${storeId}&tableId=${tableId}`
-    );
-    console.log('영수증 생성 성공:', response.data);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axios.post<{ id: string }>(
+    `/api/v1/receipts?storeId=${storeId}&tableId=${tableId}`
+  );
+  return response.data;
 };

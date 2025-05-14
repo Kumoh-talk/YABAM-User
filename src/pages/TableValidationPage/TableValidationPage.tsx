@@ -25,6 +25,7 @@ const TableValidationPage = () => {
       setLoadingMessage('주문 정보를 불러오고 있어요...');
       try {
         const receiptId = await getNonAdjustReceipt(tableId);
+
         if (receiptId) {
           redirectToOrderMenu(receiptId);
         } else {
@@ -33,7 +34,6 @@ const TableValidationPage = () => {
           redirectToOrderMenu(newReceiptId);
         }
       } catch (error) {
-        console.error('영수증 처리 실패:', error);
         toast.error('서버와 연결할 수 없어요. 잠시 후 다시 시도해주세요.');
       }
     };
