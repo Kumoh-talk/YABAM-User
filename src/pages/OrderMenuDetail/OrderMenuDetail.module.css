@@ -3,10 +3,11 @@
   flex-direction: column;
   background-color: #ececec;
   height: 100vh;
+  box-sizing: border-box; /* 전체 요소에 border-box 적용 */
 }
 
 .img {
-  background-color: aquamarine;
+  background-color: rgb(217, 221, 220);
   min-height: 200px;
 }
 
@@ -18,11 +19,7 @@
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
-}
-
-.addMenu p {
-  margin: 0;
-  font-size: 14px;
+  box-sizing: border-box; /* 내부 패딩 포함 */
 }
 
 .addMenu > button {
@@ -32,6 +29,8 @@
   background-color: #6299fe;
   color: white;
   font-weight: 500;
+  width: 100%; /* 버튼이 부모 요소를 넘지 않도록 설정 */
+  box-sizing: border-box;
 }
 
 .counterBox {
@@ -64,4 +63,34 @@
   align-items: center;
   height: 14px;
   border-left: 1px solid #c3c3c3;
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%; /* 푸터가 화면 너비를 넘지 않도록 설정 */
+  background-color: white;
+  padding: 16px;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box; /* 내부 패딩 포함 */
+}
+
+.footer > button {
+  width: 100%; /* 버튼이 부모 요소를 넘지 않도록 설정 */
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background-color: #6299fe;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  box-sizing: border-box; /* 내부 패딩 포함 */
+}
+
+.orderMenuDetail {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  height: 100vh;
+  box-sizing: border-box;
 }
