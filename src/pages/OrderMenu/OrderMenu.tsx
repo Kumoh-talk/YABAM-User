@@ -75,7 +75,13 @@ const OrderMenu = () => {
           <div className={style.top}>
             <button
               className={style.orderStatus}
-              onClick={() => navigate(`/orderStatus?receiptId=${receiptId}`)}
+              onClick={() => {
+                if (!receiptId) {
+                  toast.error("영수증 정보가 없습니다.");
+                  return;
+                }
+                navigate(`/orderStatus?receiptId=${receiptId}`);
+              }}
             >
               주문현황
             </button>
@@ -103,7 +109,13 @@ const OrderMenu = () => {
         </main>
         <button
           className={style.floatingButton}
-          onClick={() => navigate(`/orderCart?receiptId=${receiptId}`)}
+          onClick={() => {
+            if (!receiptId) {
+              toast.error("영수증 정보가 없습니다.");
+              return;
+            }
+            navigate(`/orderCart?receiptId=${receiptId}`);
+          }}
         >
           <BsCartFill />
         </button>

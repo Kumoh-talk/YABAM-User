@@ -69,10 +69,9 @@ const OrderCart = () => {
       setCartItems((prev) => prev.filter((item) => item.menuId !== selectedMenuId));
       toast.success("메뉴가 장바구니에서 삭제되었습니다.");
     } catch (error) {
-      console.error("장바구니 아이템 삭제 실패:", error);
       toast.error("메뉴를 삭제하는 데 실패했습니다. 다시 시도해주세요.");
     } finally {
-      closeDeleteModal(); // 모달 닫기
+      closeDeleteModal();
     }
   };
 
@@ -86,7 +85,6 @@ const OrderCart = () => {
       setCartItems([]);
       closeOrderModal();
     } catch (error) {
-      console.error("주문 생성 실패:", error);
       toast.error("주문을 생성하는 데 실패했습니다. 다시 시도해주세요.");
     }
   };
