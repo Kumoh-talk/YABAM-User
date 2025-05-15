@@ -1,8 +1,7 @@
 .container {
   min-width: 400px;
-  margin: 0;
-  width: 100%;
   margin: 0 auto;
+  background-color: chartreuse;
 }
 
 @font-face {
