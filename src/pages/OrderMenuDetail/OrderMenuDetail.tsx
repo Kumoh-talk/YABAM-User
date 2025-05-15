@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom"; // useNavigate 추가
 import style from "./OrderMenuDetail.module.css";
 import { LuPlus, LuMinus } from "react-icons/lu";
+import { toast } from "react-toastify";
+import { addOrUpdateCartItem } from "../../api/cart";
 import type { MenuInfoResponse } from "../../types/Menu";
 
 const OrderMenuDetail = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const menu = location.state?.menu as MenuInfoResponse;
   const receiptId = location.state?.receiptId as string;
 
@@ -21,8 +24,15 @@ const OrderMenuDetail = () => {
     setCount((prev) => prev - 1);
   };
 
-  const saveMenu = () => {
-    console.log("메뉴 담기", { menu, count, receiptId });
+  const saveMenu = async () => {
+    try {
+      await addOrUpdateCartItem(receiptId, menu.menuId, count);
+      toast.success("장바구니에 메뉴가 추가되었습니다!");
+      navigate(-1);
+    } catch (error) {
+      console.error("장바구니 추가 실패:", error);
+      toast.error("장바구니에 메뉴를 추가하는 데 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   if (!menu) {
