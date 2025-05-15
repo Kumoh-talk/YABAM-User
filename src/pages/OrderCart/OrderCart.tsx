@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
+import { IoTrashOutline } from "react-icons/io5";
 import style from "./OrderCart.module.css";
 
 type CartItem = {
@@ -60,8 +61,11 @@ const OrderCart = () => {
                     {item.quantity}개 - {item.price * item.quantity}원
                   </p>
                 </div>
-                <button className={style.deleteButton} onClick={() => removeItem(item.id)}>
-                  삭제
+                <button
+                  className={style.deleteButton}
+                  onClick={() => removeItem(item.id)}
+                >
+                  <IoTrashOutline />
                 </button>
               </li>
             ))}
