@@ -27,7 +27,7 @@ function App() {
         <Route path="/storeDetail" element={<StoreDetail />} />
         <Route path="/validate-table" element={<TableValidationPage />} />
         <Route path="/orderMenu" element={<OrderMenu />} />
-        <Route path="/OrderMenuDetail" element={<OrderMenuDetail />} />
+        <Route path="/orderMenuDetail" element={<OrderMenuDetail />} />
         <Route path="/orderCart" element={<OrderCart />} />
         <Route path="/orderStatus" element={<OrderStatus />} />
       </Routes>
