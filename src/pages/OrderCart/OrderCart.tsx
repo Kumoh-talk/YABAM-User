@@ -22,40 +22,49 @@ const OrderCart = () => {
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   // 장바구니 데이터 가져오기
+  const fetchCartItems = async () => {
+    if (!receiptId) return;
+
+    try {
+      const cartData = await getCartItems(receiptId);
+      setCartItems(cartData.cartMenuDtos);
+    } catch (error) {
+      console.error("장바구니 데이터를 불러오는 데 실패했습니다:", error);
+      toast.error("장바구니 데이터를 불러오는 데 실패했습니다.");
+    }
+  };
+
+  // 1초마다 장바구니 데이터를 갱신 (폴링 방식)
   useEffect(() => {
-    const fetchCartItems = async () => {
-      if (!receiptId) return;
-
-      try {
-        const cartData = await getCartItems(receiptId);
-        setCartItems(cartData.cartMenuDtos);
-      } catch (error) {
-        console.error("장바구니 데이터를 불러오는 데 실패했습니다:", error);
-        toast.error("장바구니 데이터를 불러오는 데 실패했습니다.");
-      }
-    };
-
     fetchCartItems();
+
+    const intervalId = setInterval(() => {
+      fetchCartItems();
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId); // 컴포넌트 언마운트 시 정리
+    };
   }, [receiptId]);
 
-  // 삭제 확인 모달 열기
+  // 삭제하기 모달 열기
   const openDeleteModal = (menuId: number) => {
     setSelectedMenuId(menuId);
     setIsModalOpen(true);
   };
 
-  // 삭제 확인 모달 닫기
+  // 삭제하기 모달 닫기
   const closeDeleteModal = () => {
     setSelectedMenuId(null);
     setIsModalOpen(false);
   };
 
-  // 주문 확인 모달 열기
+  // 주문하기 모달 열기
   const openOrderModal = () => {
     setIsOrderModalOpen(true);
   };
 
-  // 주문 확인 모달 닫기
+  // 주문하기 모달 닫기
   const closeOrderModal = () => {
     setIsOrderModalOpen(false);
   };
@@ -82,7 +91,7 @@ const OrderCart = () => {
     try {
       await createOrderWithCart(receiptId);
       toast.success("주문이 성공적으로 완료되었습니다!");
-      setCartItems([]);
+      setCartItems([]); // 주문 완료 후 장바구니 비우기
       closeOrderModal();
     } catch (error) {
       toast.error("주문을 생성하는 데 실패했습니다. 다시 시도해주세요.");
