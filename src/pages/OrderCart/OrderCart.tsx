@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import style from "./OrderCart.module.css";
 import { getCartItems, deleteCartItem } from "../../api/cart";
-import { toast } from "react-toastify"; // react-toastify 추가
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal"; // ConfirmModal 추가
+import { createOrderWithCart } from "../../api/order";
+import { toast } from "react-toastify";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import type { CartMenuDto } from "../../types/Cart";
 
 const OrderCart = () => {
@@ -12,8 +13,9 @@ const OrderCart = () => {
   const receiptId = searchParams.get("receiptId");
 
   const [cartItems, setCartItems] = useState<CartMenuDto[]>([]);
-  const [selectedMenuId, setSelectedMenuId] = useState<number | null>(null); // 삭제할 메뉴 ID
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+  const [selectedMenuId, setSelectedMenuId] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   // 총 가격 및 수량 계산
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -48,19 +50,44 @@ const OrderCart = () => {
     setIsModalOpen(false);
   };
 
+  // 주문 확인 모달 열기
+  const openOrderModal = () => {
+    setIsOrderModalOpen(true);
+  };
+
+  // 주문 확인 모달 닫기
+  const closeOrderModal = () => {
+    setIsOrderModalOpen(false);
+  };
+
   // 장바구니 아이템 삭제
   const removeItem = async () => {
     if (!receiptId || selectedMenuId === null) return;
 
     try {
-      await deleteCartItem(receiptId, selectedMenuId); // API 호출
-      setCartItems((prev) => prev.filter((item) => item.menuId !== selectedMenuId)); // 로컬 상태 업데이트
+      await deleteCartItem(receiptId, selectedMenuId);
+      setCartItems((prev) => prev.filter((item) => item.menuId !== selectedMenuId));
       toast.success("메뉴가 장바구니에서 삭제되었습니다.");
     } catch (error) {
       console.error("장바구니 아이템 삭제 실패:", error);
       toast.error("메뉴를 삭제하는 데 실패했습니다. 다시 시도해주세요.");
     } finally {
       closeDeleteModal(); // 모달 닫기
+    }
+  };
+
+  // 주문 생성
+  const createOrder = async () => {
+    if (!receiptId) return;
+
+    try {
+      await createOrderWithCart(receiptId);
+      toast.success("주문이 성공적으로 완료되었습니다!");
+      setCartItems([]);
+      closeOrderModal();
+    } catch (error) {
+      console.error("주문 생성 실패:", error);
+      toast.error("주문을 생성하는 데 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -82,7 +109,7 @@ const OrderCart = () => {
                 </div>
                 <button
                   className={style.deleteButton}
-                  onClick={() => openDeleteModal(item.menuId)} // 삭제 버튼 클릭 시 모달 열기
+                  onClick={() => openDeleteModal(item.menuId)}
                 >
                   <IoTrashOutline />
                 </button>
@@ -97,6 +124,7 @@ const OrderCart = () => {
         <button
           className={cartItems.length > 0 ? style.orderButton : style.disabledOrderButton}
           disabled={cartItems.length === 0}
+          onClick={openOrderModal}
         >
           {cartItems.length > 0
             ? `${totalQuantity}개 주문하기 - ${totalPrice}원`
@@ -111,8 +139,20 @@ const OrderCart = () => {
           description="해당 메뉴가 장바구니에서 삭제됩니다."
           cancelText="취소"
           actionText="삭제"
-          onCancel={closeDeleteModal} // 취소 버튼 클릭 시
-          onAction={removeItem} // 삭제 버튼 클릭 시
+          onCancel={closeDeleteModal}
+          onAction={removeItem}
+        />
+      )}
+
+      {/* 주문 확인 모달 */}
+      {isOrderModalOpen && (
+        <ConfirmModal
+          title="주문을 완료하시겠어요?"
+          description="장바구니에 담긴 메뉴로 주문이 생성됩니다."
+          cancelText="취소"
+          actionText="주문하기"
+          onCancel={closeOrderModal}
+          onAction={createOrder}
         />
       )}
     </div>
