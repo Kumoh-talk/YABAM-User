@@ -46,19 +46,23 @@ main {
 }
 
 .menuCategory {
-  margin-bottom: 24px;
+  border-bottom: 12px solid #ececec;
+  padding-bottom: 2px;
+  padding: 0 16px;
 }
 
 .menuCategory h3 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 12px;
-  border-bottom: 1px solid #ececec;
-  padding-bottom: 8px;
+  margin-bottom: 2px;
+}
+
+.menuCategory:last-child {
+  border-bottom: none;
 }
 
 .menuItems {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 4px;
 }

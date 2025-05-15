@@ -15,9 +15,11 @@ const MenuItem = ({ menu }: MenuItemProps) => {
       className={style.menuItem}
       onClick={() => navigate(`/orderMenuItem?menuId=${menu.menuId}`)}
     >
-      <div className={style.img}>
-        <img src={menu.menuImageUrl} alt={menu.menuName} />
-      </div>
+      {menu.menuImageUrl ? (
+        <div className={style.img}>
+          <img src={menu.menuImageUrl} alt={menu.menuName} />
+        </div>
+      ) : null}
       <div className={style.contents}>
         {menu.menuIsRecommended && <Tag content="주인장 추천!" />}
         <h4>{menu.menuName}</h4>
