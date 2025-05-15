@@ -2,7 +2,7 @@ export type StoreListResponse = {
   totalCount: number;
   hasNextPage: boolean;
   lastStoreId: number;
-  storeInfoDtos?: storeInfoDtos[];
+  storeInfoDtos: storeInfoDtos[];
 };
 
 export type storeInfoDtos = {

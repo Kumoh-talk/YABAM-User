@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios from "../lib/axiosInstance";
 import type { ApiResponse } from "../types/ApiResponse";
-import type { storeInfoDtos, StoreListResponse } from "../types/Store"; // 예시: 실제 응답 데이터 타입
+import type { StoreListResponse } from "../types/Store";
 
 export const getStoreList = async (
   lastStoreId: number | null,
   size: number
-): Promise<storeInfoDtos[] | undefined> => {
+): Promise<StoreListResponse> => {
   const response = await axios.get<ApiResponse<StoreListResponse>>(
     "/api/v1/stores",
     {
@@ -15,6 +15,7 @@ export const getStoreList = async (
       },
     }
   );
-  console.log(response);
-  return response.data.data.storeInfoDtos;
+
+  console.log(response.data.data); // 응답 확인
+  return response.data.data; // StoreListResponse 전체 반환
 };
