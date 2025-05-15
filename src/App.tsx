@@ -7,6 +7,7 @@ import TableValidationPage from "./pages/TableValidationPage/TableValidationPage
 import OrderMenu from "./pages/OrderMenu/OrderMenu";
 import OrderMenuDetail from "./pages/OrderMenuDetail/OrderMenuDetail";
 import OrderCart from "./pages/OrderCart/OrderCart";
+import OrderStatus from "./pages/OrderStatus/OrderStatus";
 import { ToastContainer } from 'react-toastify';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/orderMenu" element={<OrderMenu />} />
         <Route path="/OrderMenuDetail" element={<OrderMenuDetail />} />
         <Route path="/orderCart" element={<OrderCart />} />
+        <Route path="/orderStatus" element={<OrderStatus />} />
       </Routes>
         <ToastContainer position="top-center" autoClose={3000} />
       {/* 장바구니 화면 & 주문현황 화면 - 1초마다 get 날리기 */}

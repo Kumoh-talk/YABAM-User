@@ -71,16 +71,13 @@ const OrderMenu = () => {
       <div>
         <header>
           <div className={style.top}>
-            <IoCloseOutline />
+            <button className={style.orderStatus} onClick={() => navigate(`/orderStatus?receiptId=${receiptId}`)}>
+              주문현황
+            </button>
             <p className={style.headerTitle}>메뉴 주문하기</p>
             <button className={style.call} onClick={openModal}>
               직원호출
             </button>
-          </div>
-          <div className={style.bottom}>
-            {categories.map((category) => (
-              <Tag key={category.menuCategoryId} content={category.menuCategoryName} />
-            ))}
           </div>
         </header>
         <main>
