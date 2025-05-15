@@ -42,6 +42,8 @@ const OrderMenuDetail = () => {
             </button>
           </div>
         </div>
+      </div>
+      <div className={style.footer}>
         <button onClick={saveMenu}>메뉴 담기({count}개)</button>
       </div>
     </div>

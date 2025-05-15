@@ -6,7 +6,7 @@
 }
 
 .img {
-  background-color: aquamarine;
+  background-color: rgb(217, 221, 220);
   min-height: 200px;
 }
 
@@ -20,9 +20,9 @@
   flex: 1;
 }
 
-.addMenu p {
-  margin: 0;
-  font-size: 14px;
+.addMenu {
+  padding: 20px;
+  background-color: white;
 }
 
 .addMenu > button {
@@ -64,4 +64,33 @@
   align-items: center;
   height: 14px;
   border-left: 1px solid #c3c3c3;
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  padding: 16px;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+.footer > button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background-color: #6299fe;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.orderMenuDetail {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  height: 100vh;
+  box-sizing: border-box;
 }
