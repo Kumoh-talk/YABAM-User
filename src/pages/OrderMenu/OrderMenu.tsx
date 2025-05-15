@@ -1,7 +1,6 @@
 import style from "./OrderMenu.module.css";
 import { BsCartFill } from "react-icons/bs";
 import MenuItem from "../../components/MenuItem/MenuItem";
-import Tag from "../../components/Tag/Tag";
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { getMenuCategories, getMenusByCategory } from "../../api/menu";
@@ -90,13 +89,12 @@ const OrderMenu = () => {
               <h3>{category.menuCategoryName}</h3>
               <div className={style.menuItems}>
                 {menus[category.menuCategoryId]?.map((menu) => (
-                  <MenuItem key={menu.menuId} />
+                  <MenuItem key={menu.menuId} menu={menu} />
                 ))}
               </div>
             </div>
           ))}
         </main>
-        {/* 플로팅 버튼 */}
         <button className={style.floatingButton} onClick={goToCart}>
           <BsCartFill />
         </button>
