@@ -1,7 +1,6 @@
 import style from "./OrderMenu.module.css";
 import { BsCartFill } from "react-icons/bs";
 import MenuItem from "../../components/MenuItem/MenuItem";
-import Tag from "../../components/Tag/Tag";
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { getMenuCategories, getMenusByCategory } from "../../api/menu";
@@ -59,14 +58,13 @@ const OrderMenu = () => {
     return <div>로딩 중...</div>;
   }
 
-  // 장바구니 화면으로 이동
-  const goToCart = () => {
-    navigate(`/orderCart?receiptId=${receiptId}`);
-  };
-
-  // 주문 현황 화면으로 이동
-  const goToOrderStatus = () => {
-    navigate(`/orderStatus?receiptId=${receiptId}`);
+  // 메뉴 클릭 핸들러
+  const handleMenuClick = (menu: MenuInfoResponse) => {
+    if (menu.menuIsSoldOut) {
+      toast.error("품절된 메뉴는 선택할 수 없습니다.");
+      return;
+    }
+    navigate("/orderMenuDetail", { state: { menu, receiptId } });
   };
 
   return (
@@ -75,7 +73,16 @@ const OrderMenu = () => {
       <div>
         <header>
           <div className={style.top}>
-            <button className={style.orderStatus} onClick={goToOrderStatus}>
+            <button
+              className={style.orderStatus}
+              onClick={() => {
+                if (!receiptId) {
+                  toast.error("영수증 정보가 없습니다.");
+                  return;
+                }
+                navigate(`/orderStatus?receiptId=${receiptId}`);
+              }}
+            >
               주문현황
             </button>
             <p className={style.headerTitle}>메뉴 주문하기</p>
@@ -90,14 +97,26 @@ const OrderMenu = () => {
               <h3>{category.menuCategoryName}</h3>
               <div className={style.menuItems}>
                 {menus[category.menuCategoryId]?.map((menu) => (
-                  <MenuItem key={menu.menuId} />
+                  <MenuItem
+                    key={menu.menuId}
+                    menu={menu}
+                    onClick={() => handleMenuClick(menu)}
+                  />
                 ))}
               </div>
             </div>
           ))}
         </main>
-        {/* 플로팅 버튼 */}
-        <button className={style.floatingButton} onClick={goToCart}>
+        <button
+          className={style.floatingButton}
+          onClick={() => {
+            if (!receiptId) {
+              toast.error("영수증 정보가 없습니다.");
+              return;
+            }
+            navigate(`/orderCart?receiptId=${receiptId}`);
+          }}
+        >
           <BsCartFill />
         </button>
       </div>

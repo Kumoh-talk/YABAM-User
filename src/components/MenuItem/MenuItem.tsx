@@ -1,20 +1,27 @@
-import { useNavigate } from "react-router-dom";
-import Tag from "../Tag/Tag";
 import style from "./MenuItem.module.css";
+import Tag from "../Tag/Tag";
+import type { MenuInfoResponse } from "../../types/Menu";
 
-const MenuItem = () => {
-  const navigate = useNavigate();
+type MenuItemProps = {
+  menu: MenuInfoResponse;
+  onClick: () => void;
+};
 
+const MenuItem = ({ menu, onClick }: MenuItemProps) => {
   return (
-    <div className={style.menuItem} onClick={() => navigate("/OrderMenuDetail")}>
+    <div
+      className={`${style.menuItem} ${menu.menuIsSoldOut ? style.soldOut : ""}`}
+      onClick={onClick}
+    >
       <div className={style.img}>
-        <div>이미지</div>
+        <img src={menu.menuImageUrl} alt={menu.menuName} />
       </div>
       <div className={style.contents}>
-        <Tag content="주인장 추천!" />
-        <h4>우삼겹 야미보끔뱝</h4>
-        <p className={style.description}>우삼겹과 볶음밥의 만남</p>
-        <p className={style.price}>9500원</p>
+        {menu.menuIsRecommended && <Tag content="주인장 추천!" />}
+        <h4>{menu.menuName}</h4>
+        <p className={style.description}>{menu.menuDescription}</p>
+        <p className={style.price}>{menu.menuPrice.toLocaleString()}원</p>
+        {menu.menuIsSoldOut && <p className={style.soldOutText}>품절</p>}
       </div>
     </div>
   );

@@ -32,7 +32,6 @@ function App() {
         <Route path="/orderStatus" element={<OrderStatus />} />
       </Routes>
       <ToastContainer position="top-center" autoClose={3000} />
-      {/* 장바구니 화면 & 주문현황 화면 - 1초마다 get 날리기 */}
     </div>
   );
 }
