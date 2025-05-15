@@ -1,19 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import Tag from "../Tag/Tag";
 import style from "./MenuItem.module.css";
+import Tag from "../Tag/Tag";
 import type { MenuInfoResponse } from "../../types/Menu";
 
 type MenuItemProps = {
   menu: MenuInfoResponse;
+  onClick: () => void;
 };
 
-const MenuItem = ({ menu }: MenuItemProps) => {
-  const navigate = useNavigate();
-
+const MenuItem = ({ menu, onClick }: MenuItemProps) => {
   return (
     <div
       className={`${style.menuItem} ${menu.menuIsSoldOut ? style.soldOut : ""}`}
-      onClick={() => navigate(`/OrderMenuDetail?menuId=${menu.menuId}`)}
+      onClick={onClick}
     >
       <div className={style.img}>
         <img src={menu.menuImageUrl} alt={menu.menuName} />
