@@ -1,4 +1,17 @@
 import axiosInstance from "../lib/axiosInstance";
+import type { CartResponse } from "../types/Cart";
+
+/**
+ * 장바구니 조회 API
+ * @param receiptId - 영수증 ID
+ * @returns 장바구니 데이터
+ */
+export const getCartItems = async (receiptId: string): Promise<CartResponse> => {
+  const response = await axiosInstance.get("/api/v1/cart", {
+    params: { receiptId },
+  });
+  return response.data.data;
+};
 
 /**
  * 장바구니에 상품 추가/수정 API

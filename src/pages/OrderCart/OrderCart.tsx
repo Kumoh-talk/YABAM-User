@@ -1,58 +1,49 @@
 import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import style from "./OrderCart.module.css";
-
-type CartItem = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-};
+import { getCartItems } from "../../api/cart";
+import type { CartMenuDto } from "../../types/Cart";
 
 const OrderCart = () => {
   const [searchParams] = useSearchParams();
   const receiptId = searchParams.get("receiptId");
 
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "대패삼겹 야미볶음밥",
-      description: "대패삼겹과 특제소스",
-      price: 9500,
-      quantity: 1,
-      imageUrl: "https://via.placeholder.com/100",
-    },
-    {
-      id: 2,
-      name: "대패삼겹 야미볶음밥",
-      description: "대패삼겹과 특제소스",
-      price: 9500,
-      quantity: 1,
-      imageUrl: "https://via.placeholder.com/100",
-    },
-  ]);
+  const [cartItems, setCartItems] = useState<CartMenuDto[]>([]);
 
-  const [participants, setParticipants] = useState(3);
-
+  // 총 가격 및 수량 계산
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  const removeItem = (id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  // 장바구니 데이터 가져오기
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      if (!receiptId) return;
+
+      try {
+        const cartData = await getCartItems(receiptId);
+        setCartItems(cartData.cartMenuDtos);
+      } catch (error) {
+        console.error("장바구니 데이터를 불러오는 데 실패했습니다:", error);
+      }
+    };
+
+    fetchCartItems();
+  }, [receiptId]);
+
+  // 장바구니 아이템 삭제
+  const removeItem = (menuId: number) => {
+    setCartItems((prev) => prev.filter((item) => item.menuId !== menuId));
   };
 
   return (
     <div className={style.container}>
       <h1 className={style.title}>담은 메뉴목록</h1>
-      <p className={style.participants}>현재 {participants}명이 함께 주문 중이에요</p>
       <div className={style.cartList}>
         {cartItems.length > 0 ? (
           <ul>
             {cartItems.map((item) => (
-              <li key={item.id} className={style.cartItem}>
+              <li key={item.menuId} className={style.cartItem}>
                 <img src={item.imageUrl} alt={item.name} className={style.image} />
                 <div className={style.details}>
                   <h4>{item.name}</h4>
@@ -63,7 +54,7 @@ const OrderCart = () => {
                 </div>
                 <button
                   className={style.deleteButton}
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item.menuId)}
                 >
                   <IoTrashOutline />
                 </button>
