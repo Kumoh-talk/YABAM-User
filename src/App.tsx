@@ -5,7 +5,7 @@ import Home from "./pages/Home/Home";
 import StoreDetail from "./pages/StoreDetail/StoreDetail";
 import TableValidationPage from "./pages/TableValidationPage/TableValidationPage";
 import OrderMenu from "./pages/OrderMenu/OrderMenu";
-import OrderMenuItem from "./pages/OrderMenuItem/OrderMenuItem";
+import OrderMenuDetail from "./pages/OrderMenuDetail/OrderMenuDetail";
 import OrderCart from "./pages/OrderCart/OrderCart";
 import { ToastContainer } from 'react-toastify';
 
@@ -26,7 +26,7 @@ function App() {
         <Route path="/storeDetail" element={<StoreDetail />} />
         <Route path="/validate-table" element={<TableValidationPage />} />
         <Route path="/orderMenu" element={<OrderMenu />} />
-        <Route path="/orderMenuItem" element={<OrderMenuItem />} />
+        <Route path="/OrderMenuDetail" element={<OrderMenuDetail />} />
         <Route path="/orderCart" element={<OrderCart />} />
       </Routes>
         <ToastContainer position="top-center" autoClose={3000} />

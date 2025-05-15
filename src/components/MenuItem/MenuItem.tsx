@@ -6,7 +6,7 @@ const MenuItem = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={style.menuItem} onClick={() => navigate("/orderMenuItem")}>
+    <div className={style.menuItem} onClick={() => navigate("/OrderMenuDetail")}>
       <div className={style.img}>
         <div>이미지</div>
       </div>
