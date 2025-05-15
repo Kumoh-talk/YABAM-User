@@ -57,6 +57,7 @@ const Home = () => {
             isOpened={store.isOpened}
             headImageUrl={store.headImageUrl}
             description={store.description}
+            storeInfoImageUrl={store.storeDetailImageUrls || []}
           />
         </Link>
       ))}

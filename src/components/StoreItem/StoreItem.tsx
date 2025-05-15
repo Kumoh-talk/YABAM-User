@@ -5,9 +5,10 @@ type StoreItemProps = {
   isOpened: boolean;
   headImageUrl: string;
   description: string;
+  storeInfoImageUrl: string[]; // 가게 상세 이미지 리스트
 };
 
-const StoreItem = ({ storeName, isOpened, headImageUrl, description }: StoreItemProps) => {
+const StoreItem = ({ storeName, isOpened, headImageUrl, description, storeInfoImageUrl }: StoreItemProps) => {
   return (
     <div className={style.storeItem}>
       <div className={style.storeInfo}>
@@ -19,6 +20,13 @@ const StoreItem = ({ storeName, isOpened, headImageUrl, description }: StoreItem
           <p className={style.description}>{description}</p>
           <p className={style.status}>{isOpened ? "영업중" : "영업 종료"}</p>
         </div>
+      </div>
+      <div className={style.storeInfoImageUrl}>
+        {storeInfoImageUrl.map((item, index) => (
+          <div key={index} className={style.storeInfoImageUrlItem}>
+            <img src={item} alt={`가게 이미지 ${index + 1}`} />
+          </div>
+        ))}
       </div>
     </div>
   );
