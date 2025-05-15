@@ -1,37 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import style from "./MenuItem.module.css";
 import Tag from "../Tag/Tag";
-import { toast } from "react-toastify";
-import type { MenuInfoResponse } from "../../types/Menu";
+import style from "./MenuItem.module.css";
 
-type MenuItemProps = {
-  menu: MenuInfoResponse;
-};
-
-const MenuItem = ({ menu }: MenuItemProps) => {
+const MenuItem = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    if (menu.menuIsSoldOut) {
-      toast.error("품절된 메뉴는 선택할 수 없습니다.");
-      return;
-    }
-    navigate(`/orderMenuItem?menuId=${menu.menuId}`);
-  };
-
   return (
-    <div className={style.menuItem} onClick={handleClick}>
-      {menu.menuImageUrl ? (
-        <div className={style.img}>
-          <img src={menu.menuImageUrl} alt={menu.menuName} />
-        </div>
-      ) : null}
+    <div className={style.menuItem} onClick={() => navigate("/orderMenuItem")}>
+      <div className={style.img}>
+        <div>이미지</div>
+      </div>
       <div className={style.contents}>
-        {menu.menuIsRecommended && <Tag content="주인장 추천!" />}
-        <h4>{menu.menuName}</h4>
-        <p className={style.description}>{menu.menuDescription}</p>
-        <p className={style.price}>{menu.menuPrice}원</p>
-        {menu.menuIsSoldOut && <p className={style.soldOut}>품절</p>}
+        <Tag content="주인장 추천!" />
+        <h4>우삼겹 야미보끔뱝</h4>
+        <p className={style.description}>우삼겹과 볶음밥의 만남</p>
+        <p className={style.price}>9500원</p>
       </div>
     </div>
   );

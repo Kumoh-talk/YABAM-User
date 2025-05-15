@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import "./App.css";
-import Home from "./pages/Home/Home";
 import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
 import StoreDetail from "./pages/StoreDetail/StoreDetail";
 import TableValidationPage from "./pages/TableValidationPage/TableValidationPage";
 import OrderMenu from "./pages/OrderMenu/OrderMenu";
 import OrderMenuItem from "./pages/OrderMenuItem/OrderMenuItem";
+import OrderCart from "./pages/OrderCart/OrderCart";
 import { ToastContainer } from 'react-toastify';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/validate-table" element={<TableValidationPage />} />
         <Route path="/orderMenu" element={<OrderMenu />} />
         <Route path="/orderMenuItem" element={<OrderMenuItem />} />
+        <Route path="/orderCart" element={<OrderCart />} />
       </Routes>
         <ToastContainer position="top-center" autoClose={3000} />
       {/* 장바구니 화면 & 주문현황 화면 - 1초마다 get 날리기 */}

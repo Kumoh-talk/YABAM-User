@@ -1,9 +1,10 @@
 import style from "./OrderMenu.module.css";
 import { IoCloseOutline } from "react-icons/io5";
+import { BsCartFill } from "react-icons/bs";
 import MenuItem from "../../components/MenuItem/MenuItem";
 import Tag from "../../components/Tag/Tag";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { getMenuCategories, getMenusByCategory } from "../../api/menu";
 import type { MenuCategory, MenuInfoResponse } from "../../types/Menu";
 import { toast } from "react-toastify";
@@ -12,10 +13,12 @@ import CallStaffModal from "../../components/CallStaffModal/CallStaffModal";
 const OrderMenu = () => {
   const [searchParams] = useSearchParams();
   const storeId = Number(searchParams.get("storeId"));
+  const receiptId = searchParams.get("receiptId");
   const [categories, setCategories] = useState<MenuCategory[]>([]);
   const [menus, setMenus] = useState<Record<number, MenuInfoResponse[]>>({});
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   // 직원 호출 모달 열기/닫기
   const openModal = () => {
@@ -57,6 +60,11 @@ const OrderMenu = () => {
     return <div>로딩 중...</div>;
   }
 
+  // 장바구니 화면으로 이동
+  const goToCart = () => {
+    navigate(`/orderCart?receiptId=${receiptId}`);
+  };
+
   return (
     <>
       {modalOpen && <CallStaffModal closeModal={closeModal} />}
@@ -81,12 +89,16 @@ const OrderMenu = () => {
               <h3>{category.menuCategoryName}</h3>
               <div className={style.menuItems}>
                 {menus[category.menuCategoryId]?.map((menu) => (
-                  <MenuItem key={menu.menuId} menu={menu} />
+                  <MenuItem key={menu.menuId}/>
                 ))}
               </div>
             </div>
           ))}
         </main>
+        {/* 플로팅 버튼 */}
+        <button className={style.floatingButton} onClick={goToCart}>
+          <BsCartFill />
+        </button>
       </div>
     </>
   );
