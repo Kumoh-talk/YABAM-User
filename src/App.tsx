@@ -3,10 +3,11 @@ import "./App.css";
 import Home from "./pages/Home/Home";
 import { Route, Routes } from "react-router-dom";
 import StoreDetail from "./pages/StoreDetail/StoreDetail";
-// import QRscan from "./pages/QRscan/QRscan";
+import TableValidationPage from "./pages/TableValidationPage/TableValidationPage";
 import OrderMenu from "./pages/OrderMenu/OrderMenu";
 import OrderMenuItem from "./pages/OrderMenuItem/OrderMenuItem";
 import CallStaffModal from "./components/CallStaffModal/CallStaffModal";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   function setScreenSize(): void {
@@ -23,10 +24,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/storeDetail" element={<StoreDetail />} />
+        <Route path="/validate-table" element={<TableValidationPage />} />
         <Route path="/orderMenu" element={<OrderMenu />} />
         <Route path="/orderMenuItem" element={<OrderMenuItem />} />
         <Route path="/callStaff" element={<CallStaffModal />} />
       </Routes>
+        <ToastContainer position="top-center" autoClose={3000} />
       {/* 장바구니 화면 & 주문현황 화면 - 1초마다 get 날리기 */}
     </div>
   );

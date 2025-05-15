@@ -1,7 +1,9 @@
 header {
   display: flex;
   flex-direction: column;
-  background-color: aqua;
+  background-color: aqua; 
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .top {
@@ -41,21 +43,27 @@ main {
   background-color: antiquewhite;
   display: flex;
   flex-direction: column;
-  background-color: #ececec;
+  background-color: #ffffff;
 }
 
 .menuCategory {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  border-bottom: 12px solid #ececec;
+  padding-bottom: 2px;
   padding: 0 16px;
-  background-color: white;
-  margin-bottom: 10px;
 }
 
 .menuCategory > h3 {
-  margin: 0;
-  padding-top: 16px;
-  padding-left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.menuCategory:last-child {
+  border-bottom: none;
+}
+
+.menuItems {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
