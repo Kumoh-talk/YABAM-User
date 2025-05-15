@@ -1,5 +1,4 @@
 import style from "./OrderMenu.module.css";
-import { IoCloseOutline } from "react-icons/io5";
 import { BsCartFill } from "react-icons/bs";
 import MenuItem from "../../components/MenuItem/MenuItem";
 import Tag from "../../components/Tag/Tag";
@@ -65,13 +64,18 @@ const OrderMenu = () => {
     navigate(`/orderCart?receiptId=${receiptId}`);
   };
 
+  // 주문 현황 화면으로 이동
+  const goToOrderStatus = () => {
+    navigate(`/orderStatus?receiptId=${receiptId}`);
+  };
+
   return (
     <>
       {modalOpen && <CallStaffModal closeModal={closeModal} />}
       <div>
         <header>
           <div className={style.top}>
-            <button className={style.orderStatus} onClick={() => navigate(`/orderStatus?receiptId=${receiptId}`)}>
+            <button className={style.orderStatus} onClick={goToOrderStatus}>
               주문현황
             </button>
             <p className={style.headerTitle}>메뉴 주문하기</p>
@@ -86,7 +90,7 @@ const OrderMenu = () => {
               <h3>{category.menuCategoryName}</h3>
               <div className={style.menuItems}>
                 {menus[category.menuCategoryId]?.map((menu) => (
-                  <MenuItem key={menu.menuId}/>
+                  <MenuItem key={menu.menuId} />
                 ))}
               </div>
             </div>

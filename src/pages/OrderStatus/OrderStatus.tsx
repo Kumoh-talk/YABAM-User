@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 import style from "./OrderStatus.module.css";
 
@@ -15,6 +16,8 @@ type CartItem = {
 };
 
 const OrderStatus = () => {
+  const [searchParams] = useSearchParams();
+  const receiptId = searchParams.get("receiptId");
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
