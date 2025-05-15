@@ -21,18 +21,16 @@ function App() {
 
   return (
     <div className="container">
-      <nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/storeDetail" element={<StoreDetail />} />
-          <Route path="/validate-table" element={<TableValidationPage />} />
-          <Route path="/orderMenu" element={<OrderMenu />} />
-          <Route path="/orderMenuItem" element={<OrderMenuItem />} />
-          <Route path="/callStaff" element={<CallStaffModal />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/storeDetail" element={<StoreDetail />} />
+        <Route path="/validate-table" element={<TableValidationPage />} />
+        <Route path="/orderMenu" element={<OrderMenu />} />
+        <Route path="/orderMenuItem" element={<OrderMenuItem />} />
+        <Route path="/callStaff" element={<CallStaffModal />} />
+      </Routes>
         <ToastContainer position="top-center" autoClose={3000} />
-        {/* 장바구니 화면 & 주문현황 화면 - 1초마다 get 날리기 */}
-      </nav>
+      {/* 장바구니 화면 & 주문현황 화면 - 1초마다 get 날리기 */}
     </div>
   );
 }

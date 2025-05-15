@@ -11,9 +11,10 @@ header {
 }
 
 .scrollArea {
-  position: fixed;
-  top: 44px;
-  bottom: 58px;
+  box-sizing: border-box;
+  background-color: aquamarine;
+  width: 100%;
+  /* mix-width: 400px; */
   left: 0;
   right: 0;
   margin: 0;

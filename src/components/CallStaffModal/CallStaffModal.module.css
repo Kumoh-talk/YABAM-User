@@ -1,15 +1,84 @@
 .overlay {
   height: 100vh;
+  width: 100%;
+  z-index: 9999;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .callStaffModal {
-  background-color: antiquewhite;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 26px;
+  border-radius: 20px;
+  gap: 26px;
+  width: 320px;
+  box-sizing: border-box;
+}
+
+.callStaffModal > h4 {
+  margin: 0;
+}
+
+.tagBox {
+  display: flex;
+  gap: 6px;
+  max-width: 320px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.tag {
+  background-color: #ececec;
+  color: #7e7e7e;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 10px;
+  border: none;
+}
+
+.selected {
+  background-color: #6299fe;
+  color: white;
+}
+
+.callStaffModal > input {
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #ececec;
+  color: #7e7e7e;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.callStaffModal > input:focus {
+  outline: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.button > button {
+  background-color: white;
+  border: none;
+}
+
+.cancel {
+  color: red;
+}
+
+.save {
+  color: #6299fe;
 }
