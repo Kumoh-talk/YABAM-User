@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import style from "./OrderCart.module.css";
@@ -10,6 +10,7 @@ import type { CartMenuDto } from "../../types/Cart";
 
 const OrderCart = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const receiptId = searchParams.get("receiptId");
 
   const [cartItems, setCartItems] = useState<CartMenuDto[]>([]);
@@ -93,6 +94,7 @@ const OrderCart = () => {
       toast.success("주문이 성공적으로 완료되었습니다!");
       setCartItems([]); // 주문 완료 후 장바구니 비우기
       closeOrderModal();
+      navigate(-1);
     } catch (error) {
       toast.error("주문을 생성하는 데 실패했습니다. 다시 시도해주세요.");
     }
