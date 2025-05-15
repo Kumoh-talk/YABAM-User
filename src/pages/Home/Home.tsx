@@ -3,18 +3,14 @@ import StoreItem from "../../components/StoreItem/StoreItem";
 
 const Home = () => {
   return (
-    <>
-      <main className={style.scrollArea}>
-        <nav className={style.nav}>
-          <StoreItem />
-          <StoreItem />
-          <StoreItem />
-          <StoreItem />
-          <StoreItem />
-          <StoreItem />
-        </nav>
-      </main>
-    </>
+    <div className={style.scrollArea}>
+      <StoreItem />
+      <StoreItem />
+      <StoreItem />
+      <StoreItem />
+      <StoreItem />
+      <StoreItem />
+    </div>
   );
 };
 

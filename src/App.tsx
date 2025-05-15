@@ -20,16 +20,14 @@ function App() {
 
   return (
     <div className="container">
-      <nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/storeDetail" element={<StoreDetail />} />
-          <Route path="/orderMenu" element={<OrderMenu />} />
-          <Route path="/orderMenuItem" element={<OrderMenuItem />} />
-          <Route path="/callStaff" element={<CallStaffModal />} />
-        </Routes>
-        {/* 장바구니 화면 & 주문현황 화면 - 1초마다 get 날리기 */}
-      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/storeDetail" element={<StoreDetail />} />
+        <Route path="/orderMenu" element={<OrderMenu />} />
+        <Route path="/orderMenuItem" element={<OrderMenuItem />} />
+        <Route path="/callStaff" element={<CallStaffModal />} />
+      </Routes>
+      {/* 장바구니 화면 & 주문현황 화면 - 1초마다 get 날리기 */}
     </div>
   );
 }
