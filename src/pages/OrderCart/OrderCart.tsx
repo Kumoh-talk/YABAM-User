@@ -102,7 +102,7 @@ const OrderCart = () => {
 
   return (
     <div className={style.container}>
-      <h1 className={style.title}>담은 메뉴목록</h1>
+      <h1 className={style.title}>장바구니</h1>
       <div className={style.cartList}>
         {cartItems.length > 0 ? (
           <ul>

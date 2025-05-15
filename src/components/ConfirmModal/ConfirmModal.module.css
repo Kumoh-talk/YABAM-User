@@ -1,8 +1,10 @@
 .overlay {
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
   z-index: 9999;
-  max-width: 450px;
   position: fixed;
   display: flex;
   align-items: center;
@@ -35,7 +37,7 @@
 .description {
   margin: 0;
   font-size: 14px;
-  color: #777; /* 연한 회색 */
+  color: #777;
   text-align: center;
 }
 
