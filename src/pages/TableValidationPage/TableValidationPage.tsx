@@ -6,10 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const TableValidationPage = () => {
   const [searchParams] = useSearchParams();
-  const tableId = Number(searchParams.get('tableId'));
-  const storeId = Number(searchParams.get('storeId'));
   const navigate = useNavigate();
   const [loadingMessage, setLoadingMessage] = useState('테이블 정보를 확인 중입니다...');
+
+  const tableId = Number(searchParams.get('tableid'));
+  const storeId = Number(searchParams.get('storeid'));
 
   useEffect(() => {
     if (!tableId || !storeId || isNaN(tableId) || isNaN(storeId)) {
@@ -18,7 +19,7 @@ const TableValidationPage = () => {
     }
 
     const redirectToOrderMenu = (receiptId: string) => {
-      navigate(`/orderMenu?receiptId=${receiptId}&storeId=${storeId}`);
+      navigate(`/orderMenu?receiptid=${receiptId}&storeid=${storeId}`);
     };
 
     const handleReceipt = async () => {
