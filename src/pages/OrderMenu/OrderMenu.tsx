@@ -2,7 +2,7 @@ import style from "./OrderMenu.module.css";
 import { BsCartFill } from "react-icons/bs";
 import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import type { MenuInfoResponse } from "../../types/Menu";
+import type { MenuCategory, MenuInfoResponse } from "../../types/Menu";
 import { toast } from "react-toastify";
 import CallStaffModal from "../../components/CallStaffModal/CallStaffModal";
 import Menu from "../Menu/Menu";
