@@ -18,19 +18,27 @@ const CallStaffModal = ({ closeModal }: modalType) => {
   ];
 
   const [selected, setSelected] = useState<string[]>([]);
+  const [requestMessage, setRequestMessage] = useState<string>("");
+
   const toggleTagItem = (text: string) => {
-    setSelected((prev) =>
-      prev.includes(text)
+    setSelected((prev) => {
+      const updatedSelected = prev.includes(text)
         ? prev.filter((item) => item !== text)
-        : [...prev, text]
-    );
-    console.log(selected);
+        : [...prev, text];
+
+      // 선택된 항목으로 텍스트 필드 업데이트
+      setRequestMessage(
+        updatedSelected.length > 0
+          ? `${updatedSelected.join(", ")} 주세요!`
+          : ""
+      );
+
+      return updatedSelected;
+    });
   };
 
-  const [requestMessage, setRequestMessage] = useState<string>("");
   const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRequestMessage(e.target.value);
-    console.log(requestMessage);
   };
 
   return (
