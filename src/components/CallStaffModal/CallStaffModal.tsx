@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { callStaff } from "../../api/callStaff";
 import style from "./CallStaffModal.module.css";
 
 type modalType = {
   closeModal: () => void;
+  receiptId: string; // 영수증 ID
 };
 
-const CallStaffModal = ({ closeModal }: modalType) => {
+const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
   const requestItem: string[] = [
     "물",
     "앞접시",
@@ -26,7 +29,6 @@ const CallStaffModal = ({ closeModal }: modalType) => {
         ? prev.filter((item) => item !== text)
         : [...prev, text];
 
-      // 선택된 항목으로 텍스트 필드 업데이트
       setRequestMessage(
         updatedSelected.length > 0
           ? `${updatedSelected.join(", ")} 주세요!`
@@ -39,6 +41,34 @@ const CallStaffModal = ({ closeModal }: modalType) => {
 
   const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRequestMessage(e.target.value);
+  };
+
+  const handleSave = async () => {
+    if (!requestMessage.trim()) {
+      toast.error("요청 메시지를 입력해주세요.");
+      return;
+    }
+
+    const toastId = toast.loading("요청을 전송 중입니다...");
+
+    try {
+      await callStaff(receiptId, requestMessage);
+      toast.update(toastId, {
+        render: "호출 요청이 성공적으로 전송되었습니다.",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+      closeModal(); // 모달 닫기
+    } catch (error) {
+      console.error("호출 요청 실패:", error);
+      toast.update(toastId, {
+        render: "호출 요청 중 오류가 발생했습니다.",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    }
   };
 
   return (
@@ -71,7 +101,9 @@ const CallStaffModal = ({ closeModal }: modalType) => {
           <button className={style.cancel} onClick={closeModal}>
             취소
           </button>
-          <button className={style.save}>저장</button>
+          <button className={style.save} onClick={handleSave}>
+            저장
+          </button>
         </div>
       </div>
     </div>

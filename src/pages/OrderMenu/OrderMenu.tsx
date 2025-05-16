@@ -69,7 +69,9 @@ const OrderMenu = () => {
 
   return (
     <>
-      {modalOpen && <CallStaffModal closeModal={closeModal} />}
+      {modalOpen && receiptId && (
+        <CallStaffModal closeModal={closeModal} receiptId={receiptId} />
+      )}
       <div>
         <header>
           <div className={style.top}>
