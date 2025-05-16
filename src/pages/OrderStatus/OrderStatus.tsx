@@ -1,58 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
+import { getReceiptDetails } from "../../api/receipt";
+import type { OrderAndMenusResponse, OrderMenuResponse } from "../../types/Receipt";
 import style from "./OrderStatus.module.css";
-
-type OrderStatus = "ORDERED" | "COOKING" | "CANCELED" | "COMPLETED";
-
-type CartItem = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-  orderMenuStatus: OrderStatus;
-};
 
 const OrderStatus = () => {
   const [searchParams] = useSearchParams();
   const receiptId = searchParams.get("receiptId");
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "대패삼겹 야미볶음밥",
-      description: "대패삼겹과 특제소스",
-      price: 9500,
-      quantity: 1,
-      imageUrl: "https://via.placeholder.com/100",
-      orderMenuStatus: "ORDERED",
-    },
-    {
-      id: 2,
-      name: "우삼겹 야미볶음밥",
-      description: "우삼겹과 볶음밥의 만남",
-      price: 9500,
-      quantity: 1,
-      imageUrl: "https://via.placeholder.com/100",
-      orderMenuStatus: "COOKING",
-    },
-    {
-      id: 3,
-      name: "직화불고기 야미볶음밥",
-      description: "불고기와 야채의 환상조합",
-      price: 10000,
-      quantity: 1,
-      imageUrl: "https://via.placeholder.com/100",
-      orderMenuStatus: "CANCELED",
-    },
-  ]);
+  const [orderAndMenus, setOrderAndMenus] = useState<OrderAndMenusResponse[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const handleCancel = (id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  };
+  useEffect(() => {
+    const fetchOrderStatus = async () => {
+      if (!receiptId) return;
 
-  const renderStatusTag = (status: OrderStatus) => {
+      try {
+        const data = await getReceiptDetails(receiptId);
+        setOrderAndMenus(data.orderAndMenusResponses);
+      } catch (error) {
+        console.error("주문 현황 데이터를 불러오는 데 실패했습니다:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrderStatus();
+  }, [receiptId]);
+
+  const renderStatusTag = (status: string) => {
     switch (status) {
       case "ORDERED":
         return <span className={style.tagOrdered}>접수 대기</span>;
@@ -62,42 +38,53 @@ const OrderStatus = () => {
         return <span className={style.tagCompleted}>완료</span>;
       case "CANCELED":
         return <span className={style.tagCanceled}>취소됨</span>;
+      default:
+        return null;
     }
   };
+
+  if (loading) {
+    return <p>로딩 중...</p>;
+  }
+
+  if (orderAndMenus.length === 0) {
+    return <p>주문 내역이 없습니다. 메뉴를 주문해주세요!</p>;
+  }
 
   return (
     <div className={style.container}>
       <h2>주문 현황</h2>
-      {cartItems.length === 0 ? (
-        <p>주문 내역이 없습니다. 메뉴를 주문해주세요!</p>
-      ) : (
-        cartItems.map((item) => (
-          <div
-            key={item.id}
-            className={`${style.item} ${
-              item.orderMenuStatus === "CANCELED" ? style.canceled : ""
-            }`}
-          >
-            <img src={item.imageUrl} alt={item.name} />
-            <div className={style.details}>
-              <h4>{item.name}</h4>
-              <p>{item.description}</p>
-              <p>
-                {item.price.toLocaleString()}원 · {item.quantity}개
-              </p>
-              {renderStatusTag(item.orderMenuStatus)}
-            </div>
-            {item.orderMenuStatus === "ORDERED" && (
-              <button
-                className={style.cancelBtn}
-                onClick={() => handleCancel(item.id)}
+      {orderAndMenus.map((order) => (
+        <div key={order.orderId} className={style.order}>
+          <h3>주문 ID: {order.orderId}</h3>
+          <p>총 가격: {order.totalPrice.toLocaleString()}원</p>
+          <div className={style.orderMenus}>
+            {order.orderMenus.map((menu: OrderMenuResponse) => (
+              <div
+                key={menu.orderMenuId}
+                className={`${style.item} ${
+                  menu.orderMenuStatus === "CANCELED" ? style.canceled : ""
+                }`}
               >
-                <IoTrashOutline />
-              </button>
-            )}
+                <img src={menu.menuInfo.menuImageUrl} alt={menu.menuInfo.menuName} />
+                <div className={style.details}>
+                  <h4>{menu.menuInfo.menuName}</h4>
+                  <p>{menu.menuInfo.menuDescription}</p>
+                  <p>
+                    {menu.menuInfo.menuPrice.toLocaleString()}원 · {menu.quantity}개
+                  </p>
+                  {renderStatusTag(menu.orderMenuStatus)}
+                </div>
+                {menu.orderMenuStatus === "ORDERED" && (
+                  <button className={style.cancelBtn}>
+                    <IoTrashOutline />
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
-        ))
-      )}
+        </div>
+      ))}
     </div>
   );
 };
