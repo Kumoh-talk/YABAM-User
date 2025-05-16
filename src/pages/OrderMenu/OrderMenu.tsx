@@ -10,8 +10,8 @@ import CallStaffModal from "../../components/CallStaffModal/CallStaffModal";
 
 const OrderMenu = () => {
   const [searchParams] = useSearchParams();
-  const storeId = Number(searchParams.get("storeId"));
-  const receiptId = searchParams.get("receiptId");
+  const storeId = Number(searchParams.get("storeid"));
+  const receiptId = searchParams.get("receiptid");
   const [categories, setCategories] = useState<MenuCategory[]>([]);
   const [menus, setMenus] = useState<Record<number, MenuInfoResponse[]>>({});
   const [loading, setLoading] = useState(true);
@@ -82,7 +82,7 @@ const OrderMenu = () => {
                   toast.error("영수증 정보가 없습니다.");
                   return;
                 }
-                navigate(`/orderStatus?receiptId=${receiptId}`);
+                navigate(`/orderStatus?receiptid=${receiptId}`);
               }}
             >
               주문현황
@@ -116,7 +116,7 @@ const OrderMenu = () => {
               toast.error("영수증 정보가 없습니다.");
               return;
             }
-            navigate(`/orderCart?receiptId=${receiptId}`);
+            navigate(`/orderCart?receiptid=${receiptId}`);
           }}
         >
           <BsCartFill />

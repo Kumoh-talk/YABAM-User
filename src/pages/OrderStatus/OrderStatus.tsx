@@ -10,7 +10,7 @@ import style from "./OrderStatus.module.css";
 
 const OrderStatus = () => {
   const [searchParams] = useSearchParams();
-  const receiptId = searchParams.get("receiptId");
+  const receiptId = searchParams.get("receiptid");
   const [orderAndMenus, setOrderAndMenus] = useState<OrderAndMenusResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedOrderMenuId, setSelectedOrderMenuId] = useState<number | null>(null);
@@ -79,7 +79,7 @@ const OrderStatus = () => {
         isLoading: false,
         autoClose: 3000,
       });
-      setSelectedOrderMenuId(null); // 모달 닫기
+      setSelectedOrderMenuId(null);
     } catch (error) {
       console.error("주문 메뉴 삭제 실패:", error);
       toast.update(toastId, {
