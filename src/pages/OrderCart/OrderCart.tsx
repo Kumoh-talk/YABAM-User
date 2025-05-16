@@ -19,7 +19,10 @@ const OrderCart = () => {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   // 총 가격 및 수량 계산
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   // 장바구니 데이터 가져오기
@@ -76,7 +79,9 @@ const OrderCart = () => {
 
     try {
       await deleteCartItem(receiptId, selectedMenuId);
-      setCartItems((prev) => prev.filter((item) => item.menuId !== selectedMenuId));
+      setCartItems((prev) =>
+        prev.filter((item) => item.menuId !== selectedMenuId)
+      );
       toast.success("메뉴가 장바구니에서 삭제되었습니다.");
     } catch (error) {
       toast.error("메뉴를 삭제하는 데 실패했습니다. 다시 시도해주세요.");
@@ -108,7 +113,11 @@ const OrderCart = () => {
           <ul>
             {cartItems.map((item) => (
               <li key={item.menuId} className={style.cartItem}>
-                <img src={item.imageUrl} alt={item.name} className={style.image} />
+                <img
+                  src={item.imageUrl}
+                  alt={item.name}
+                  className={style.image}
+                />
                 <div className={style.details}>
                   <h4>{item.name}</h4>
                   <p>{item.description}</p>
@@ -131,7 +140,9 @@ const OrderCart = () => {
       </div>
       <div className={style.footer}>
         <button
-          className={cartItems.length > 0 ? style.orderButton : style.disabledOrderButton}
+          className={
+            cartItems.length > 0 ? style.orderButton : style.disabledOrderButton
+          }
           disabled={cartItems.length === 0}
           onClick={openOrderModal}
         >

@@ -8,7 +8,7 @@ import OrderMenu from "./pages/OrderMenu/OrderMenu";
 import OrderMenuDetail from "./pages/OrderMenuDetail/OrderMenuDetail";
 import OrderCart from "./pages/OrderCart/OrderCart";
 import OrderStatus from "./pages/OrderStatus/OrderStatus";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   function setScreenSize(): void {

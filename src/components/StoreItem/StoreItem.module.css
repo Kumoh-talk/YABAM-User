@@ -1,7 +1,7 @@
 .storeItem {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   padding: 20px 0;
   border-bottom: 1px solid #d7d7d7;
 }
@@ -13,42 +13,56 @@
 
 .storeImg {
   background-color: blue;
-  width: 80px;
+  width: 80px; /* 이미지의 너비를 제한 */
+  height: 80px; /* 이미지의 높이를 제한 */
+  border-radius: 8px; /* 둥근 모서리 */
+  overflow: hidden; /* 이미지가 영역을 벗어나지 않도록 */
+}
+
+.storeImg img {
+  width: 100%; /* 부모 요소의 너비에 맞게 조정 */
+  height: 100%; /* 부모 요소의 높이에 맞게 조정 */
+  object-fit: cover; /* 이미지 비율을 유지하며 영역에 맞게 조정 */
 }
 
 .title > h4 {
   margin: 0;
 }
 
-.title > p {
+.description {
   font-size: 12px;
   color: #9f9f9f;
   margin: 6px 0;
 }
 
-.open {
-  font-weight: bolder;
-}
-
-.info {
-  display: flex;
-  gap: 10px;
-  /* background-color: azure; */
-}
-
-.info > p {
+.status {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 
-.menuImg {
+.storeInfoImageUrl {
   display: flex;
-  gap: 8px;
+  width: 100%;
+  overflow-x: auto; /* 가로 스크롤 활성화 */
+  gap: 10px;
+  padding: 10px 0;
 }
 
-.menuImg > div {
+.storeInfoImageUrl::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
+}
+
+.storeInfoImageUrlItem {
+  flex: 0 0 auto;
   width: 100px;
-  height: 120px;
-  border: 1px solid black;
+  height: 100px;
   border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #d7d7d7;
+}
+
+.storeInfoImageUrlItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지 비율 유지 */
 }
