@@ -68,32 +68,38 @@ const StoreDetail = () => {
 
   return (
     <div className={style.storeDetail}>
-      <div
-        className={style.scrollImg}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <RxDoubleArrowLeft onClick={prevSlide} />
-        {imgSlide.map((slide, index) => (
-          <img
-            key={index}
-            src={slide}
-            alt={`가게 이미지 ${index + 1}`}
-            style={{ display: index === currentImg ? "block" : "none" }}
-          />
-        ))}
-        <RxDoubleArrowRight onClick={nextSlide} />
-      </div>
+      {imgSlide.length > 0 ? (
+        <div
+          className={style.scrollImg}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {imgSlide.length > 1 && <RxDoubleArrowLeft onClick={prevSlide} />}
+          {imgSlide.map((slide, index) => (
+            <img
+              key={index}
+              src={slide}
+              alt={`가게 이미지 ${index + 1}`}
+              className={index === currentImg ? style.visible : style.hidden}
+            />
+          ))}
+          {imgSlide.length > 1 && <RxDoubleArrowRight onClick={nextSlide} />}
+        </div>
+      ) : (
+        <div className={style.noImage}>이미지가 없습니다.</div>
+      )}
+
       <div className={style.storeInfo}>
         <StoreInfo storeInfo={storeInfo} />
       </div>
+
       <div className={style.menuList}>
         <div className={style.menuCategory} />
         {storeInfo ? (
           <Menu storeId={storeInfo.storeId} />
         ) : (
-          <Loading msg='가게 메뉴 정보를 불러오지 못했습니다.'/>
+          <Loading msg="가게 메뉴 정보를 불러오지 못했습니다." />
         )}
       </div>
     </div>
