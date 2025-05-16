@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import type { StoreResponse } from "../../types/Store";
 import { getStoreInfo } from "../../api/store";
 import Menu from "../Menu/Menu";
+import { toast } from "react-toastify";
 
 const StoreDetail = () => {
   const location = useLocation();
@@ -55,6 +56,7 @@ const StoreDetail = () => {
       setStoreInfo(info);
       setImgSlide(info?.detailImageUrls || ["이미지"]);
     } catch (e) {
+      toast.error("가게 정보를 불러오는 데 실패했습니다");
       console.error("가게 정보를 불러오는 데 실패했습니다:", e);
     }
   };
@@ -65,7 +67,6 @@ const StoreDetail = () => {
 
   return (
     <div className={style.storeDetail}>
-      {/* 이미지 슬라이드 */}
       <div
         className={style.scrollImg}
         onTouchStart={handleTouchStart}
@@ -83,13 +84,9 @@ const StoreDetail = () => {
         ))}
         <RxDoubleArrowRight onClick={nextSlide} />
       </div>
-
-      {/* 가게 정보 */}
       <div className={style.storeInfo}>
         <StoreInfo storeInfo={storeInfo} />
       </div>
-
-      {/* 메뉴 리스트 */}
       <div className={style.menuList}>
         <div className={style.menuCategory} />
         {storeInfo ? (
