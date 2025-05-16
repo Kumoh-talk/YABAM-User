@@ -40,8 +40,9 @@
   right: 16px;
 }
 
-.storeInfo {
-  margin-bottom: 10px;
+.menuList {
+  margin: 0;
+  margin-top: 10px;
 }
 
 .menuCategory {

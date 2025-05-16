@@ -17,11 +17,12 @@ const MenuItem = ({ menu, onClick }: MenuItemProps) => {
         <img src={menu.menuImageUrl} alt={menu.menuName} />
       </div>
       <div className={style.contents}>
+           {menu.menuIsSoldOut && <p className={style.soldOutText}>품절</p>}
         {menu.menuIsRecommended && <Tag content="주인장 추천!" />}
         <h4>{menu.menuName}</h4>
         <p className={style.description}>{menu.menuDescription}</p>
         <p className={style.price}>{menu.menuPrice.toLocaleString()}원</p>
-        {menu.menuIsSoldOut && <p className={style.soldOutText}>품절</p>}
+     
       </div>
     </div>
   );
