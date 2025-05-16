@@ -13,3 +13,17 @@ export type storeInfoDtos = {
   description: string;
   storeDetailImageUrls?: string[];
 };
+
+export type StoreResponse = {
+  storeId: number;
+  isOpen: boolean;
+  storeName: string;
+  latitude: number;
+  longitude: number;
+  description: string;
+  headImageUrl: string;
+  university: string;
+  tableTime: number;
+  tableCost: number;
+  detailImageUrls: string[];
+};
