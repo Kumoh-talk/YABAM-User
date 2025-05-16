@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { getNonAdjustReceipt, createReceipt } from "../../api/receipt";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "../../components/Loading/Loading";
 
 const TableValidationPage = () => {
   const [searchParams] = useSearchParams();
@@ -10,8 +11,8 @@ const TableValidationPage = () => {
   const [loadingMessage, setLoadingMessage] =
     useState("테이블 정보를 확인 중입니다...");
 
-  const tableId = Number(searchParams.get('tableid'));
-  const storeId = Number(searchParams.get('storeid'));
+  const tableId = Number(searchParams.get("tableid"));
+  const storeId = Number(searchParams.get("storeid"));
 
   useEffect(() => {
     if (!tableId || !storeId || isNaN(tableId) || isNaN(storeId)) {
@@ -45,7 +46,7 @@ const TableValidationPage = () => {
 
   return (
     <div style={{ textAlign: "center", paddingTop: "100px", fontSize: "18px" }}>
-      <div>{loadingMessage}</div>
+      <Loading msg={loadingMessage} />
     </div>
   );
 };

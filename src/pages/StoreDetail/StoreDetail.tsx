@@ -7,6 +7,7 @@ import type { StoreResponse } from "../../types/Store";
 import { getStoreInfo } from "../../api/store";
 import Menu from "../Menu/Menu";
 import { toast } from "react-toastify";
+import Loading from "../../components/Loading/Loading";
 
 const StoreDetail = () => {
   const location = useLocation();
@@ -92,7 +93,7 @@ const StoreDetail = () => {
         {storeInfo ? (
           <Menu storeId={storeInfo.storeId} />
         ) : (
-          <div>가게 메뉴 정보를 불러오지 못했습니다.</div>
+          <Loading msg='가게 메뉴 정보를 불러오지 못했습니다.'/>
         )}
       </div>
     </div>

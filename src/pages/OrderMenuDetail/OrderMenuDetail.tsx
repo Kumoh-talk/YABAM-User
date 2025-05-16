@@ -5,6 +5,7 @@ import { LuPlus, LuMinus } from "react-icons/lu";
 import { toast } from "react-toastify";
 import { addOrUpdateCartItem } from "../../api/cart";
 import type { MenuInfoResponse } from "../../types/Menu";
+import Loading from "../../components/Loading/Loading";
 
 const OrderMenuDetail = () => {
   const navigate = useNavigate();
@@ -38,7 +39,8 @@ const OrderMenuDetail = () => {
   };
 
   if (!menu) {
-    return <div>메뉴 정보를 불러올 수 없습니다.</div>;
+    return 
+      <Loading msg='메뉴 정보를 불러올 수 없습니다.'/>;
   }
 
   return (
