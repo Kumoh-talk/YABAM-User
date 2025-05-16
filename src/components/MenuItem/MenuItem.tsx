@@ -4,7 +4,7 @@ import type { MenuInfoResponse } from "../../types/Menu";
 
 type MenuItemProps = {
   menu: MenuInfoResponse;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const MenuItem = ({ menu, onClick }: MenuItemProps) => {

@@ -1,0 +1,22 @@
+.menuCategory {
+  border-bottom: 12px solid #ececec;
+  padding-bottom: 2px;
+  padding: 0 16px;
+  background-color: white;
+}
+
+.menuCategory > h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.menuCategory:last-child {
+  border-bottom: none;
+}
+
+.menuItems {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
