@@ -44,7 +44,7 @@ const Menu = ({ storeId, onMenuClick }: menuType) => {
   if (loading) {
     return (
       <>
-        <Loading msg="로딩중..." />;
+        <Loading msg="로딩중..." />
       </>
     );
   }

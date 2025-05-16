@@ -22,7 +22,7 @@ export const getStoreList = async (
 
 export const getStoreInfo = async (storeId: string): Promise<StoreResponse> => {
   const response = await axiosInstance.get("/api/v1/store", {
-    params: storeId,
+    params: { storeId },
   });
 
   return response.data.data;

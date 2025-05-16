@@ -11,7 +11,7 @@ import Loading from "../../components/Loading/Loading";
 
 const StoreDetail = () => {
   const location = useLocation();
-  const storeId = location.state;
+  const storeId = location.state?.storeId;
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>(["이미지"]);
   const [currentImg, setCurrentImg] = useState(0);
@@ -51,7 +51,7 @@ const StoreDetail = () => {
     setEndX(null);
   };
 
-  const fetchStoreId = async () => {
+  const fetchStoreInfo = async () => {
     try {
       const info = await getStoreInfo(storeId);
       setStoreInfo(info);
@@ -63,7 +63,7 @@ const StoreDetail = () => {
   };
 
   useEffect(() => {
-    fetchStoreId();
+    fetchStoreInfo();
   }, [storeId]);
 
   return (

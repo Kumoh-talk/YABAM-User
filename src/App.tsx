@@ -9,7 +9,6 @@ import OrderMenuDetail from "./pages/OrderMenuDetail/OrderMenuDetail";
 import OrderCart from "./pages/OrderCart/OrderCart";
 import OrderStatus from "./pages/OrderStatus/OrderStatus";
 import { ToastContainer } from "react-toastify";
-import Loading from "./components/Loading/Loading";
 
 function App() {
   function setScreenSize(): void {
@@ -31,7 +30,6 @@ function App() {
         <Route path="/orderMenuDetail" element={<OrderMenuDetail />} />
         <Route path="/orderCart" element={<OrderCart />} />
         <Route path="/orderStatus" element={<OrderStatus />} />
-         <Route path="/loading" element={<Loading/>} />
       </Routes>
       <ToastContainer position="top-center" autoClose={3000} />
     </div>
