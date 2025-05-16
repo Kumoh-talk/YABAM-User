@@ -37,7 +37,8 @@ const Home = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 100 &&
         !isLoading
       ) {
         fetchStoreData(); // 스크롤 하단에 도달하면 추가 데이터 로드
@@ -51,7 +52,11 @@ const Home = () => {
   return (
     <div className={style.scrollArea}>
       {data.map((store) => (
-        <Link to={`/storeDetail/${store.storeId}`} key={store.storeId}>
+        <Link
+          to={"/storeDetail"}
+          key={store.storeId}
+          state={{ storeId: store.storeId }}
+        >
           <StoreItem
             storeName={store.storeName}
             isOpened={store.isOpened}

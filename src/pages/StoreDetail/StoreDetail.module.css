@@ -5,18 +5,17 @@
 }
 
 .scrollImg {
-  min-height: 200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: antiquewhite;
   padding: 0 10px;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
-.scrollImg > div {
-  background-color: aliceblue;
-  height: 100%;
+.scrollImg > img {
+  /* height: 100%; */
   transition: transform 0.5s ease;
   &.active {
     transform: translateX(0);
@@ -27,7 +26,20 @@
 }
 
 .scrollImg > svg {
+  z-index: 10;
 }
+.slide {
+  display: flex;
+  transition: transform 0.5s ease;
+
+  &.active {
+    transform: translateX(0);
+  }
+  &:not(.active) {
+    transform: translateX(100%);
+  }
+}
+
 .storeInfo {
   margin-bottom: 10px;
 }
