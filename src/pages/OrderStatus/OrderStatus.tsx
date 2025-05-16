@@ -15,22 +15,32 @@ const OrderStatus = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedOrderMenuId, setSelectedOrderMenuId] = useState<number | null>(null);
 
+  // 주문 현황 데이터 조회 함수
+  const fetchOrderStatus = async () => {
+    if (!receiptId) return;
+
+    try {
+      const data = await getReceiptDetails(receiptId);
+      setOrderAndMenus(data.orderAndMenusResponses);
+    } catch (error) {
+      console.error("주문 현황 데이터를 불러오는 데 실패했습니다:", error);
+      toast.error("주문 현황 데이터를 불러오는 데 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 폴링 방식으로 1초마다 데이터 조회
   useEffect(() => {
-    const fetchOrderStatus = async () => {
-      if (!receiptId) return;
+    fetchOrderStatus(); // 초기 데이터 로드
 
-      try {
-        const data = await getReceiptDetails(receiptId);
-        setOrderAndMenus(data.orderAndMenusResponses);
-      } catch (error) {
-        console.error("주문 현황 데이터를 불러오는 데 실패했습니다:", error);
-        toast.error("주문 현황 데이터를 불러오는 데 실패했습니다.");
-      } finally {
-        setLoading(false);
-      }
+    const intervalId = setInterval(() => {
+      fetchOrderStatus();
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId); // 컴포넌트 언마운트 시 정리
     };
-
-    fetchOrderStatus();
   }, [receiptId]);
 
   const renderStatusTag = (status: string) => {
