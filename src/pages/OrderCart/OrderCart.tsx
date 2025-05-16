@@ -11,7 +11,7 @@ import type { CartMenuDto } from "../../types/Cart";
 const OrderCart = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const receiptId = searchParams.get("receiptId");
+  const receiptId = searchParams.get("receiptid");
 
   const [cartItems, setCartItems] = useState<CartMenuDto[]>([]);
   const [selectedMenuId, setSelectedMenuId] = useState<number | null>(null);

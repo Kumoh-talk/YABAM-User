@@ -1,4 +1,4 @@
-import axios from '../lib/axiosInstance';
+import axiosInstance from '../lib/axiosInstance';
 import type { ApiResponse } from '../types/ApiResponse';
 import type { MenuCategory, MenuInfoResponse } from '../types/Menu';
 
@@ -8,7 +8,7 @@ import type { MenuCategory, MenuInfoResponse } from '../types/Menu';
   * @returns {Promise<MenuCategory[]>} - 메뉴 카테고리 목록
 */
 export const getMenuCategories = async (storeId: number): Promise<MenuCategory[]> => {
-  const response = await axios.get<ApiResponse<MenuCategory[]>>(
+  const response = await axiosInstance.get<ApiResponse<MenuCategory[]>>(
     `/api/v1/stores/${storeId}/menu-categories`
   );
   return response.data.data;
@@ -24,7 +24,7 @@ export const getMenusByCategory = async (
   storeId: number,
   menuCategoryId: number
 ): Promise<MenuInfoResponse[]> => {
-  const response = await axios.get<ApiResponse<MenuInfoResponse[]>>(
+  const response = await axiosInstance.get<ApiResponse<MenuInfoResponse[]>>(
     `/api/v1/stores/${storeId}/menu-category/${menuCategoryId}/menus`
   );
   return response.data.data;
