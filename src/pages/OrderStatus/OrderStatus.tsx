@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 import { getReceiptDetails } from "../../api/receipt";
+import { deleteOrderMenu } from "../../api/order";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import type { OrderAndMenusResponse, OrderMenuResponse } from "../../types/Receipt";
 import style from "./OrderStatus.module.css";
 
@@ -10,6 +12,7 @@ const OrderStatus = () => {
   const receiptId = searchParams.get("receiptId");
   const [orderAndMenus, setOrderAndMenus] = useState<OrderAndMenusResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedOrderMenuId, setSelectedOrderMenuId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchOrderStatus = async () => {
@@ -40,6 +43,25 @@ const OrderStatus = () => {
         return <span className={style.tagCanceled}>취소됨</span>;
       default:
         return null;
+    }
+  };
+
+  const handleDelete = async () => {
+    if (selectedOrderMenuId === null) return;
+
+    try {
+      await deleteOrderMenu(selectedOrderMenuId);
+      setOrderAndMenus((prev) =>
+        prev.map((order) => ({
+          ...order,
+          orderMenus: order.orderMenus.filter(
+            (menu) => menu.orderMenuId !== selectedOrderMenuId
+          ),
+        }))
+      );
+      setSelectedOrderMenuId(null); // 모달 닫기
+    } catch (error) {
+      console.error("주문 메뉴 삭제 실패:", error);
     }
   };
 
@@ -76,7 +98,10 @@ const OrderStatus = () => {
                   {renderStatusTag(menu.orderMenuStatus)}
                 </div>
                 {menu.orderMenuStatus === "ORDERED" && (
-                  <button className={style.cancelBtn}>
+                  <button
+                    className={style.cancelBtn}
+                    onClick={() => setSelectedOrderMenuId(menu.orderMenuId)}
+                  >
                     <IoTrashOutline />
                   </button>
                 )}
@@ -85,6 +110,16 @@ const OrderStatus = () => {
           </div>
         </div>
       ))}
+      {selectedOrderMenuId !== null && (
+        <ConfirmModal
+          title="주문 메뉴 삭제"
+          description="해당 메뉴를 삭제하시겠습니까?"
+          cancelText="취소"
+          actionText="삭제"
+          onCancel={() => setSelectedOrderMenuId(null)}
+          onAction={handleDelete}
+        />
+      )}
     </div>
   );
 };
