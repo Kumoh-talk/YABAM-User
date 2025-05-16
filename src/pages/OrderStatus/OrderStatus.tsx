@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
 import { getReceiptDetails } from "../../api/receipt";
 import { deleteOrderMenu } from "../../api/order";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
@@ -23,6 +24,7 @@ const OrderStatus = () => {
         setOrderAndMenus(data.orderAndMenusResponses);
       } catch (error) {
         console.error("주문 현황 데이터를 불러오는 데 실패했습니다:", error);
+        toast.error("주문 현황 데이터를 불러오는 데 실패했습니다.");
       } finally {
         setLoading(false);
       }
@@ -49,6 +51,8 @@ const OrderStatus = () => {
   const handleDelete = async () => {
     if (selectedOrderMenuId === null) return;
 
+    const toastId = toast.loading("삭제 요청 중입니다...");
+
     try {
       await deleteOrderMenu(selectedOrderMenuId);
       setOrderAndMenus((prev) =>
@@ -59,9 +63,21 @@ const OrderStatus = () => {
           ),
         }))
       );
+      toast.update(toastId, {
+        render: "주문 메뉴가 성공적으로 삭제되었습니다.",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
       setSelectedOrderMenuId(null); // 모달 닫기
     } catch (error) {
       console.error("주문 메뉴 삭제 실패:", error);
+      toast.update(toastId, {
+        render: "주문 메뉴 삭제 중 오류가 발생했습니다.",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
     }
   };
 
