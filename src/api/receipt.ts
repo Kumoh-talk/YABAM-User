@@ -34,6 +34,8 @@ export const getNonAdjustReceipt = async (tableId: number): Promise<string | nul
 export const getReceiptDetails = async (
   receiptId: string
 ): Promise<ReceiptAndOrdersResponse> => {
-  const response = await axiosInstance.get(`api/v1/receipts/${receiptId}`);
+  const response = await axiosInstance.get<ApiResponse<ReceiptAndOrdersResponse>>(
+    `/api/v1/receipts/${receiptId}`
+  );
   return response.data.data;
 };

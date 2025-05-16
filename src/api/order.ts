@@ -13,5 +13,5 @@ export const createOrderWithCart = async (receiptId: string): Promise<void> => {
  * @param orderMenuId - 주문 메뉴 ID
  */
 export const deleteOrderMenu = async (orderMenuId: number): Promise<void> => {
-  await axiosInstance.delete(`api/v1/order-menus/${orderMenuId}`);
+  await axiosInstance.delete(`/api/v1/order-menus/${orderMenuId}`);
 };
