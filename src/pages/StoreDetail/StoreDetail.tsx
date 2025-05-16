@@ -15,12 +15,38 @@ const StoreDetail = () => {
   const [currentImg, setCurrentImg] = useState(0);
   const length = imgSlide.length;
 
+  const [startX, setStartX] = useState<number | null>(null);
+  const [endX, setEndX] = useState<number | null>(null);
+
   const nextSlide = () => {
     setCurrentImg(currentImg === length - 1 ? 0 : currentImg + 1);
   };
 
   const prevSlide = () => {
     setCurrentImg(currentImg === 0 ? length - 1 : currentImg - 1);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setEndX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (startX !== null && endX !== null) {
+      const diff = startX - endX;
+
+      if (diff > 50) {
+        nextSlide();
+      } else if (diff < -50) {
+        prevSlide();
+      }
+    }
+
+    setStartX(null);
+    setEndX(null);
   };
 
   const fetchStoreId = async () => {
@@ -40,7 +66,12 @@ const StoreDetail = () => {
   return (
     <div className={style.storeDetail}>
       {/* 이미지 슬라이드 */}
-      <div className={style.scrollImg}>
+      <div
+        className={style.scrollImg}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <RxDoubleArrowLeft onClick={prevSlide} />
         {imgSlide.map((slide, index) => (
           <img
