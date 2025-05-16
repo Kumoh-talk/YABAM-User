@@ -1,19 +1,17 @@
 import StoreInfo from "../../components/StoreInfo/StoreInfo";
 import style from "./StoreDetail.module.css";
-import { RxDoubleArrowLeft } from "react-icons/rx";
-import { RxDoubleArrowRight } from "react-icons/rx";
+import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import type { StoreResponse } from "../../types/Store";
-import { getStoreId } from "../../api/store";
+import { getStoreInfo } from "../../api/store";
 import Menu from "../Menu/Menu";
 
 const StoreDetail = () => {
   const location = useLocation();
   const storeId = location.state;
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
-  const [imgSlide, setImgSlide] = useState(["이미지"]);
-
+  const [imgSlide, setImgSlide] = useState<string[]>(["이미지"]);
   const [currentImg, setCurrentImg] = useState(0);
   const length = imgSlide.length;
 
@@ -27,54 +25,40 @@ const StoreDetail = () => {
 
   const fetchStoreId = async () => {
     try {
-      console.log(storeId);
-      const info = await getStoreId(storeId); //여기 메소드 이름 바꿔야할 듯
-      console.log("간당당", info);
+      const info = await getStoreInfo(storeId);
       setStoreInfo(info);
-      setImgSlide(
-        storeInfo?.detailImageUrls === undefined
-          ? ["이미지"]
-          : storeInfo?.detailImageUrls
-      );
+      setImgSlide(info?.detailImageUrls || ["이미지"]);
     } catch (e) {
-      console.log(e);
+      console.error("가게 정보를 불러오는 데 실패했습니다:", e);
     }
   };
 
   useEffect(() => {
     fetchStoreId();
-    console.log("야호", imgSlide);
-  }, []);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     nextSlide();
-  //   }, 3000);
-
-  //   return () => clearInterval(interval);
-  // }, [currentImg, length]);
+  }, [storeId]);
 
   return (
     <div className={style.storeDetail}>
+      {/* 이미지 슬라이드 */}
       <div className={style.scrollImg}>
         <RxDoubleArrowLeft onClick={prevSlide} />
-        {imgSlide.map((slide, index) => {
-          return (
-            <img
-              className={
-                index === currentImg ? style.slide_active : style.slide
-              }
-              key={index}
-              src={slide}
-            ></img>
-          );
-        })}
-
+        {imgSlide.map((slide, index) => (
+          <img
+            key={index}
+            src={slide}
+            alt={`가게 이미지 ${index + 1}`}
+            style={{ display: index === currentImg ? "block" : "none" }}
+          />
+        ))}
         <RxDoubleArrowRight onClick={nextSlide} />
       </div>
+
+      {/* 가게 정보 */}
       <div className={style.storeInfo}>
         <StoreInfo storeInfo={storeInfo} />
       </div>
+
+      {/* 메뉴 리스트 */}
       <div className={style.menuList}>
         <div className={style.menuCategory} />
         {storeInfo ? (

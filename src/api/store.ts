@@ -20,7 +20,7 @@ export const getStoreList = async (
   return response.data.data; // StoreListResponse 전체 반환
 };
 
-export const getStoreId = async (storeId: string): Promise<StoreResponse> => {
+export const getStoreInfo = async (storeId: string): Promise<StoreResponse> => {
   const response = await axiosInstance.get("/api/v1/store", {
     params: storeId,
   });
