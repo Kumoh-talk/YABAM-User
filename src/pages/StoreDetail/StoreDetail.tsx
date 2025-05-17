@@ -16,7 +16,6 @@ const StoreDetail = () => {
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>([]);
   const [currentImg, setCurrentImg] = useState(0);
-  const [isSelectedMap, setSelectedMap] = useState(false);
   const length = imgSlide.length;
 
   const [startX, setStartX] = useState<number | null>(null);
@@ -121,7 +120,14 @@ const StoreDetail = () => {
           <>
             {selectedMenuBar === "map" ? (
               <div className={style.naverMap}>
-                <NaverMap latitude={36.146} longitude={128.3933} />
+                {storeInfo.latitude && storeInfo.longitude ? (
+                  <NaverMap
+                    latitude={storeInfo.latitude}
+                    longitude={storeInfo.longitude}
+                  />
+                ) : (
+                  <div>가게 위치 정보가 없습니다.</div>
+                )}
               </div>
             ) : (
               <Menu storeId={storeInfo.storeId} />

@@ -15,15 +15,17 @@ const NaverMap = ({ latitude, longitude }: LocationType) => {
       zoom: 18,
     };
 
-    const map = new naver.maps.Map("map", mapOptions);
+    const map = new naver.maps.Map("naverMap", mapOptions);
 
     const marker = new naver.maps.Marker({
       position: new naver.maps.LatLng(latitude, longitude),
       map: map,
     });
-  }, []);
 
-  return <div id="map" className={style.map} />;
+    return () => marker.setMap(null);
+  }, [latitude, longitude]);
+
+  return <div id="naverMap" className={style.map} />;
 };
 
 export default NaverMap;
