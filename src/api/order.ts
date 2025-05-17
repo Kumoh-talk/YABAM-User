@@ -9,9 +9,15 @@ export const createOrderWithCart = async (receiptId: string): Promise<void> => {
 };
 
 /**
- * 주문 메뉴 삭제 API
+ * 주문 메뉴 상태 변경 API
  * @param orderMenuId - 주문 메뉴 ID
+ * @param orderMenuStatus - 변경할 주문 메뉴 상태 (COOKING, CANCELED, COMPLETED)
  */
-export const deleteOrderMenu = async (orderMenuId: number): Promise<void> => {
-  await axiosInstance.delete(`/api/v1/order-menus/${orderMenuId}`);
+export const updateOrderMenuStatus = async (
+  orderMenuId: number,
+  orderMenuStatus: "COOKING" | "CANCELED" | "COMPLETED"
+): Promise<void> => {
+  await axiosInstance.patch(`/api/v1/order-menus/${orderMenuId}/status`, null, {
+    params: { orderMenuStatus },
+  });
 };
