@@ -2,7 +2,7 @@ import style from "./OrderMenu.module.css";
 import { BsCartFill } from "react-icons/bs";
 import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import type { MenuCategory, MenuInfoResponse } from "../../types/Menu";
+import type { MenuInfoResponse } from "../../types/Menu"; // MenuCategory 제거
 import { toast } from "react-toastify";
 import CallStaffModal from "../../components/CallStaffModal/CallStaffModal";
 import Menu from "../Menu/Menu";
@@ -11,9 +11,6 @@ const OrderMenu = () => {
   const [searchParams] = useSearchParams();
   const storeId = Number(searchParams.get("storeid"));
   const receiptId = searchParams.get("receiptid");
-  const [categories, setCategories] = useState<MenuCategory[]>([]);
-  const [menus, setMenus] = useState<Record<number, MenuInfoResponse[]>>({});
-  const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
