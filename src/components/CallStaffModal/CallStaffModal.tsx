@@ -57,7 +57,7 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
         render: "호출 요청이 성공적으로 전송되었습니다.",
         type: "success",
         isLoading: false,
-        autoClose: 3000,
+        autoClose: 2000,
       });
       closeModal(); // 모달 닫기
     } catch (error) {
@@ -66,7 +66,7 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
         render: "호출 요청 중 오류가 발생했습니다.",
         type: "error",
         isLoading: false,
-        autoClose: 3000,
+        autoClose: 2000,
       });
     }
   };
