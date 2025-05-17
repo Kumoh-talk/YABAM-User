@@ -78,7 +78,7 @@ const OrderStatus = () => {
         render: "주문 메뉴가 성공적으로 취소되었습니다.",
         type: "success",
         isLoading: false,
-        autoClose: 3000,
+        autoClose: 2000,
       });
       setSelectedOrderMenuId(null);
     } catch (error) {
@@ -87,7 +87,7 @@ const OrderStatus = () => {
         render: "주문 메뉴 취소 중 오류가 발생했습니다.",
         type: "error",
         isLoading: false,
-        autoClose: 3000,
+        autoClose: 2000,
       });
     }
   };

@@ -31,7 +31,7 @@ function App() {
         <Route path="/orderCart" element={<OrderCart />} />
         <Route path="/orderStatus" element={<OrderStatus />} />
       </Routes>
-      <ToastContainer position="top-center" autoClose={3000} />
+      <ToastContainer position="top-center" autoClose={2000} />
     </div>
   );
 }
