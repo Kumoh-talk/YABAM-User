@@ -1,65 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
+import style from "./NaverMap.module.css";
+type LocationType = {
+  latitude: number;
+  longitude: number;
+};
 
-const NaverMap = () => {
-  const { naver } = window;
-  const mapOptions = {
-    center: new naver.maps.LatLng(37.3595704, 127.105399),
-    zoom: 10,
-  };
-  const map = new naver.maps.Map("map", mapOptions);
+const NaverMap = ({ latitude, longitude }: LocationType) => {
+  useEffect(() => {
+    const { naver } = window;
+    if (!naver) return;
 
-  return <div id="map" style={{ width: "100%", height: "500px" }} />;
-  //   const mapRef = useRef(null);
-  //   const [currentLocation, setCurrentLocation] = useState({
-  //     latitude: 37.123456,
-  //     longitude: 127.123456,
-  //   });
+    const mapOptions = {
+      center: new naver.maps.LatLng(latitude, longitude),
+      zoom: 18,
+    };
 
-  //   const success = () => {
-  //     setCurrentLocation({
-  //       latitude: 37.123456,
-  //       longitude: 127.123456,
-  //     });
-  //   };
+    const map = new naver.maps.Map("map", mapOptions);
 
-  //   const error = () => {
-  //     setCurrentLocation({
-  //       latitude: 37.123456,
-  //       longitude: 127.123456,
-  //     });
-  //   };
+    const marker = new naver.maps.Marker({
+      position: new naver.maps.LatLng(latitude, longitude),
+      map: map,
+    });
+  }, []);
 
-  //   //   let map: naver.maps.Map;
-  //   //   const center: naver.maps.LatLng = new naver.maps.LatLng(
-  //   //     37.3595704,
-  //   //     127.105399
-  //   //   );
-
-  //   //   map = new naver.maps.Map("map", {
-  //   //     center: center,
-  //   //     zoom: 16,
-  //   //   });
-
-  //   //   useEffect(() => {
-  //   //     const mapOptions = {
-  //   //       center: new naver.maps.LatLng(37.511337, 127.012084),
-  //   //       logoControl: false,
-  //   //       tileDuration: 200,
-  //   //       zoom: 10,
-  //   //     };
-  //   //     mapRef.current = new naver.maps.Map("map", mapOptions);
-  //   //   }, []);
-  //   const map = new naver.maps.Map("map", {
-  //     center: new naver.maps.LatLng(37.3595704, 127.105399),
-  //     zoom: 15,
-  //   });
-
-  //   const marker = new naver.maps.Marker({
-  //     position: new naver.maps.LatLng(37.3595704, 127.105399),
-  //     map: map,
-  //   });
-
-  //   return <div id="map"></div>;
+  return <div id="map" className={style.map} />;
 };
 
 export default NaverMap;

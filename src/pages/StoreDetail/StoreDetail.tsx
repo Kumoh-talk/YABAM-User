@@ -22,6 +22,10 @@ const StoreDetail = () => {
   const [startX, setStartX] = useState<number | null>(null);
   const [endX, setEndX] = useState<number | null>(null);
 
+  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">(
+    "menu"
+  );
+
   const nextSlide = () => {
     setCurrentImg(currentImg === length - 1 ? 0 : currentImg + 1);
   };
@@ -91,24 +95,44 @@ const StoreDetail = () => {
       ) : (
         <div className={style.noImage}>이미지가 없습니다.</div>
       )}
-
-      <div className={style.storeInfo}>
+      <div>
         <StoreInfo storeInfo={storeInfo} />
       </div>
-
       <div className={style.menuBar}>
-        <button>메뉴</button>
-        <button>위치보기</button>
+        <button
+          className={`${style.button} ${
+            selectedMenuBar === "menu" ? style.selected : ""
+          }`}
+          onClick={() => setSelectedMenuBar("menu")}
+        >
+          메뉴
+        </button>
+        <button
+          className={`${style.button} ${
+            selectedMenuBar === "map" ? style.selected : ""
+          }`}
+          onClick={() => setSelectedMenuBar("map")}
+        >
+          위치보기
+        </button>
       </div>
-      <div className={style.naverMap}>
-        <NaverMap />
-      </div>
-      <div className={style.menuList}>
-        {/* 메뉴바 중 뭘 선택하냐에 따라 렌더링 다르게 */}
+      <div className={style.selectedInfo}>
         {storeInfo ? (
-          <Menu storeId={storeInfo.storeId} />
+          <>
+            {selectedMenuBar === "map" ? (
+              <div className={style.naverMap}>
+                <NaverMap latitude={36.146} longitude={128.3933} />
+              </div>
+            ) : (
+              <Menu storeId={storeInfo.storeId} />
+            )}
+          </>
         ) : (
-          <Loading msg="가게 메뉴 정보를 불러오지 못했습니다." />
+          <Loading
+            msg={`${
+              selectedMenuBar === "map" ? "가게 위치" : "가게 메뉴"
+            } 정보를 불러오지 못했습니다.`}
+          />
         )}
       </div>
     </div>
