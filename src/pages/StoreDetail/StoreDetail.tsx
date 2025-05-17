@@ -8,6 +8,7 @@ import { getStoreInfo } from "../../api/store";
 import Menu from "../Menu/Menu";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
+import NaverMap from "../../components/NaverMap/NaverMap";
 
 const StoreDetail = () => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const StoreDetail = () => {
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>([]);
   const [currentImg, setCurrentImg] = useState(0);
+  const [isSelectedMap, setSelectedMap] = useState(false);
   const length = imgSlide.length;
 
   const [startX, setStartX] = useState<number | null>(null);
@@ -94,8 +96,15 @@ const StoreDetail = () => {
         <StoreInfo storeInfo={storeInfo} />
       </div>
 
+      <div className={style.menuBar}>
+        <button>메뉴</button>
+        <button>위치보기</button>
+      </div>
+      <div className={style.naverMap}>
+        <NaverMap />
+      </div>
       <div className={style.menuList}>
-        <div className={style.menuCategory} />
+        {/* 메뉴바 중 뭘 선택하냐에 따라 렌더링 다르게 */}
         {storeInfo ? (
           <Menu storeId={storeInfo.storeId} />
         ) : (
