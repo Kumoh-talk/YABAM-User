@@ -9,15 +9,21 @@ import type { ReceiptAndOrdersResponse } from '../types/Receipt';
 export const createReceipt = async (
   storeId: number,
   tableId: string
-): Promise<{ id: string }> => {
-  const response = await axiosInstance.post<{ id: string }>(
-    `/api/v1/receipts?storeId=${storeId}&tableId=${tableId}`
-  );
-  return response.data;
+): Promise<{ receiptId: string }> => {
+  const response = await axiosInstance.post<{
+    data: {
+      receiptInfo: {
+        receiptId: string;
+      };
+    };
+  }>(`/api/v1/receipts?storeId=${storeId}&tableId=${tableId}`);
+  return { receiptId: response.data.data.receiptInfo.receiptId };
 };
 
 /**
  * 대상 테이블의 미정산 영수증 ID를 조회하는 API
+ * @param tableId - 테이블 ID
+ * @returns 영수증 ID
  */
 export const getNonAdjustReceipt = async (tableId: string): Promise<string | null> => {
   const response = await axiosInstance.get<ApiResponse<ReceiptIdData>>(
