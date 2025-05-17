@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { getReceiptDetails } from "../../api/receipt";
-import { deleteOrderMenu } from "../../api/order";
+import { updateOrderMenuStatus } from "../../api/order";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import type { OrderAndMenusResponse, OrderMenuResponse } from "../../types/Receipt";
 import style from "./OrderStatus.module.css";
@@ -30,16 +30,15 @@ const OrderStatus = () => {
     }
   };
 
-  // 폴링 방식으로 1초마다 데이터 조회
   useEffect(() => {
-    fetchOrderStatus(); // 초기 데이터 로드
+    fetchOrderStatus();
 
     const intervalId = setInterval(() => {
       fetchOrderStatus();
     }, 1000);
 
     return () => {
-      clearInterval(intervalId); // 컴포넌트 언마운트 시 정리
+      clearInterval(intervalId);
     };
   }, [receiptId]);
 
@@ -58,32 +57,34 @@ const OrderStatus = () => {
     }
   };
 
-  const handleDelete = async () => {
+  const handleCancel = async () => {
     if (selectedOrderMenuId === null) return;
 
-    const toastId = toast.loading("삭제 요청 중입니다...");
+    const toastId = toast.loading("취소 요청 중입니다...");
 
     try {
-      await deleteOrderMenu(selectedOrderMenuId);
+      await updateOrderMenuStatus(selectedOrderMenuId, "CANCELED");
       setOrderAndMenus((prev) =>
         prev.map((order) => ({
           ...order,
-          orderMenus: order.orderMenus.filter(
-            (menu) => menu.orderMenuId !== selectedOrderMenuId
+          orderMenus: order.orderMenus.map((menu) =>
+            menu.orderMenuId === selectedOrderMenuId
+              ? { ...menu, orderMenuStatus: "CANCELED" }
+              : menu
           ),
         }))
       );
       toast.update(toastId, {
-        render: "주문 메뉴가 성공적으로 삭제되었습니다.",
+        render: "주문 메뉴가 성공적으로 취소되었습니다.",
         type: "success",
         isLoading: false,
         autoClose: 3000,
       });
       setSelectedOrderMenuId(null);
     } catch (error) {
-      console.error("주문 메뉴 삭제 실패:", error);
+      console.error("주문 메뉴 취소 실패:", error);
       toast.update(toastId, {
-        render: "주문 메뉴 삭제 중 오류가 발생했습니다.",
+        render: "주문 메뉴 취소 중 오류가 발생했습니다.",
         type: "error",
         isLoading: false,
         autoClose: 3000,
@@ -138,12 +139,12 @@ const OrderStatus = () => {
       ))}
       {selectedOrderMenuId !== null && (
         <ConfirmModal
-          title="주문 메뉴 삭제"
-          description="해당 메뉴를 삭제하시겠습니까?"
+          title="주문 메뉴 취소"
+          description="해당 메뉴를 취소하시겠습니까?"
           cancelText="취소"
-          actionText="삭제"
+          actionText="확인"
           onCancel={() => setSelectedOrderMenuId(null)}
-          onAction={handleDelete}
+          onAction={handleCancel} // 취소 처리 함수 연결
         />
       )}
     </div>
