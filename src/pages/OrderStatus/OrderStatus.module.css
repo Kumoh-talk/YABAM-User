@@ -1,6 +1,7 @@
 .container {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  background-color: #ffffff;
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -10,6 +11,15 @@ h2 {
   font-weight: bold;
   margin-bottom: 20px;
   color: #333;
+}
+
+.order {
+  margin-bottom: 20px;
+}
+
+.order > h4 {
+  margin: 0;
+  padding-left: 6px;
 }
 
 .item {
@@ -52,8 +62,11 @@ h2 {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 20px;
+}
+
+.cancelBtn > svg {
   color: #ff4d4f;
+  font-size: 24px;
 }
 
 .cancelBtn:active {
@@ -102,4 +115,19 @@ h2 {
   color: #8c8c8c;
   font-size: 12px;
   font-weight: bold;
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalPrice {
+  display: flex;
+  gap: 4px;
+}
+
+.totalPrice > p:first-child {
+  font-weight: 600;
 }

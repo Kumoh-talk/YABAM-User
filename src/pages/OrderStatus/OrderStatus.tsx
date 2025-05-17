@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { IoTrashOutline } from "react-icons/io5";
+import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { getReceiptDetails } from "../../api/receipt";
 import { updateOrderMenuStatus } from "../../api/order";
@@ -106,49 +106,62 @@ const OrderStatus = () => {
   return (
     <div className={style.container}>
       <h2>주문 현황</h2>
-      {orderAndMenus.length === 0 ? (
-        <p>주문 내역이 없습니다. 메뉴를 주문해주세요!</p>
-      ) : (
-        orderAndMenus.map((order) => (
-          <div key={order.orderId} className={style.order}>
-            <h3>주문 ID: {order.orderId}</h3>
-            <p>총 가격: {order.totalPrice.toLocaleString()}원</p>
-            <div className={style.orderMenus}>
-              {order.orderMenus.map((menu: OrderMenuResponse) => (
-                <div
-                  key={menu.orderMenuId}
-                  className={`${style.item} ${
-                    menu.orderMenuStatus === "CANCELED" ? style.canceled : ""
-                  }`}
-                >
-                  <img
-                    src={menu.menuInfo.menuImageUrl}
-                    alt={menu.menuInfo.menuName}
-                  />
-                  <div className={style.details}>
-                    <h4>{menu.menuInfo.menuName}</h4>
-                    <p>{menu.menuInfo.menuDescription}</p>
-                    <p>
-                      {menu.menuInfo.menuPrice.toLocaleString()}원 ·{" "}
-                      {menu.quantity}개
-                    </p>
-                    {renderStatusTag(menu.orderMenuStatus)}
+      <div>
+        {orderAndMenus.length === 0 ? (
+          <p>주문 내역이 없습니다. 메뉴를 주문해주세요!</p>
+        ) : (
+          orderAndMenus.map((order) => (
+            <div key={order.orderId} className={style.order}>
+              <h4>no.{order.orderId}</h4>
+              <div className={style.orderMenus}>
+                {order.orderMenus.map((menu: OrderMenuResponse) => (
+                  <div
+                    key={menu.orderMenuId}
+                    className={`${style.item} ${
+                      menu.orderMenuStatus === "CANCELED" ? style.canceled : ""
+                    }`}
+                  >
+                    <img
+                      src={menu.menuInfo.menuImageUrl}
+                      alt={menu.menuInfo.menuName}
+                    />
+                    <div className={style.details}>
+                      <h4>{menu.menuInfo.menuName}</h4>
+                      <p>{menu.menuInfo.menuDescription}</p>
+                      <p>
+                        {menu.menuInfo.menuPrice.toLocaleString()}원 ×
+                        {menu.quantity}개
+                      </p>
+                      {renderStatusTag(menu.orderMenuStatus)}
+                    </div>
+                    {menu.orderMenuStatus === "ORDERED" && (
+                      <button
+                        className={style.cancelBtn}
+                        onClick={() => setSelectedOrderMenuId(menu.orderMenuId)}
+                      >
+                        <AiOutlineDelete />
+                      </button>
+                    )}
                   </div>
-                  {menu.orderMenuStatus === "ORDERED" && (
-                    <button
-                      className={style.cancelBtn}
-                      onClick={() => setSelectedOrderMenuId(menu.orderMenuId)}
-                    >
-                      <IoTrashOutline />
-                    </button>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        ))
-      )}
-
+          ))
+        )}
+      </div>
+      <div className={style.priceContainer}>
+        <p>총 가격</p>
+        <div className={style.totalPrice}>
+          <p>
+            {orderAndMenus
+              .reduce((prev, order) => {
+                return prev + order.totalPrice;
+              }, 0)
+              .toLocaleString("ko-KR")}
+          </p>
+          <p> 원</p>
+        </div>
+      </div>
       {selectedOrderMenuId !== null && (
         <ConfirmModal
           title="주문 메뉴 취소"
