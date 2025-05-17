@@ -8,7 +8,7 @@ import type { ReceiptAndOrdersResponse } from '../types/Receipt';
  */
 export const createReceipt = async (
   storeId: number,
-  tableId: number
+  tableId: string
 ): Promise<{ id: string }> => {
   const response = await axiosInstance.post<{ id: string }>(
     `/api/v1/receipts?storeId=${storeId}&tableId=${tableId}`
@@ -19,7 +19,7 @@ export const createReceipt = async (
 /**
  * 대상 테이블의 미정산 영수증 ID를 조회하는 API
  */
-export const getNonAdjustReceipt = async (tableId: number): Promise<string | null> => {
+export const getNonAdjustReceipt = async (tableId: string): Promise<string | null> => {
   const response = await axiosInstance.get<ApiResponse<ReceiptIdData>>(
     `/api/v1/table/${tableId}/receipts/non-adjust`
   );

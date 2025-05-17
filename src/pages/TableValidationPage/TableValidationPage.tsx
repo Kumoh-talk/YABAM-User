@@ -11,11 +11,11 @@ const TableValidationPage = () => {
   const [loadingMessage, setLoadingMessage] =
     useState("테이블 정보를 확인 중입니다...");
 
-  const tableId = Number(searchParams.get("tableid"));
+  const tableId = searchParams.get("tableid");
   const storeId = Number(searchParams.get("storeid"));
 
   useEffect(() => {
-    if (!tableId || !storeId || isNaN(tableId) || isNaN(storeId)) {
+    if (!tableId || !storeId || isNaN(storeId)) {
       toast.error("올바르지 않은 QR 코드입니다. 매장 직원에게 문의해주세요.");
       return;
     }
