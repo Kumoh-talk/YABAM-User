@@ -27,6 +27,7 @@
 }
 
 .title > h4 {
+  padding-top: 4px;
   margin: 0;
 }
 
@@ -37,13 +38,22 @@
   white-space: normal;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
 .status {
   margin: 0;
   font-size: 14px;
+  font-weight: bold;
+}
+
+.status.opened {
+  color: #6299fe; /* 영업중일 때 글자색 */
+}
+
+.status.closed {
+  color: #626161; /* 영업 종료일 때 글자색 */
 }
 
 .storeInfoImageUrl {

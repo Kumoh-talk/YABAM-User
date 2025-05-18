@@ -14,3 +14,29 @@
   text-decoration: none;
   color: inherit;
 }
+
+.header {
+  display: flex;
+  align-items: left;
+  flex-direction:row;
+  justify-content: flex-start;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: bold;
+  color: #333333;
+  margin: 0;
+}
