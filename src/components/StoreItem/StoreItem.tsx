@@ -36,11 +36,7 @@ const StoreItem = ({
 
           return (
             <div key={index} className={style.storeInfoImageUrlItem}>
-              <img
-                src={fixedUrl}
-                alt={`가게 이미지 ${index + 1}`}
-                referrerPolicy="no-referrer"
-              />
+              <img src={fixedUrl} alt={`가게 이미지 ${index + 1}`} />
             </div>
           );
         })}
