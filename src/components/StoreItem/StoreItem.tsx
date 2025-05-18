@@ -5,7 +5,7 @@ type StoreItemProps = {
   isOpened: boolean;
   headImageUrl: string;
   description: string;
-  storeInfoImageUrl: string[]; // 가게 상세 이미지 리스트
+  storeInfoImageUrl: string[];
 };
 
 const StoreItem = ({
