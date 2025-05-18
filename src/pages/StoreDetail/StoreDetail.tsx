@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide, type SwiperClass } from "swiper/react";
 import StoreInfo from "../../components/StoreInfo/StoreInfo";
 import style from "./StoreDetail.module.css";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import type { StoreResponse } from "../../types/Store";
 import { getStoreInfo } from "../../api/store";
