@@ -21,9 +21,7 @@ const StoreDetail = () => {
   const [startX, setStartX] = useState<number | null>(null);
   const [endX, setEndX] = useState<number | null>(null);
 
-  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">(
-    "menu"
-  );
+  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">("menu");
 
   const nextSlide = () => {
     setCurrentImg(currentImg === length - 1 ? 0 : currentImg + 1);
@@ -81,14 +79,21 @@ const StoreDetail = () => {
           onTouchEnd={handleTouchEnd}
         >
           {imgSlide.length > 1 && <RxDoubleArrowLeft onClick={prevSlide} />}
-          {imgSlide.map((slide, index) => (
-            <img
-              key={index}
-              src={slide}
-              alt={`가게 이미지 ${index + 1}`}
-              className={index === currentImg ? style.visible : style.hidden}
-            />
-          ))}
+          {imgSlide.map((slide, index) => {
+            const fixedUrl =
+              slide.startsWith("https:/") && !slide.startsWith("https://")
+                ? slide.replace("https:/", "https://")
+                : slide;
+
+            return (
+              <img
+                key={index}
+                src={fixedUrl}
+                alt={`가게 이미지 ${index + 1}`}
+                className={index === currentImg ? style.visible : style.hidden}
+              />
+            );
+          })}
           {imgSlide.length > 1 && <RxDoubleArrowRight onClick={nextSlide} />}
         </div>
       ) : (
