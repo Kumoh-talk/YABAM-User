@@ -11,7 +11,7 @@ type PropsType = {
 const MenuList = ({ menus, category, onMenuClick }: PropsType) => {
   return (
     <div className={style.menuCategory}>
-      <h3>{category.menuCategoryId}</h3>
+      <h3>{category.menuCategoryName}</h3>
       <div className={style.menuItems}>
         {menus[category.menuCategoryId]?.map((menu) => (
           <MenuItem
