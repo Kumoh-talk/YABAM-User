@@ -41,7 +41,7 @@ const Home = () => {
           document.body.offsetHeight - 100 &&
         !isLoading
       ) {
-        fetchStoreData(); // 스크롤 하단에 도달하면 추가 데이터 로드
+        fetchStoreData();
       }
     };
 
@@ -50,23 +50,36 @@ const Home = () => {
   }, [isLoading, hasNextPage]);
 
   return (
-    <div className={style.scrollArea}>
-      {data.map((store) => (
-        <Link
-          to={"/storeDetail"}
-          key={store.storeId}
-          state={{ storeId: store.storeId }}
-        >
-          <StoreItem
-            storeName={store.storeName}
-            isOpened={store.isOpened}
-            headImageUrl={store.headImageUrl}
-            description={store.description}
-            storeInfoImageUrl={store.storeDetailImageUrls || []}
-          />
-        </Link>
-      ))}
-      {isLoading && <p>Loading...</p>}
+    <div>
+      {/* 타이틀 영역 */}
+      <header className={style.header}>
+        <img
+          src="https://kumoh-talk-bucket.s3.ap-northeast-2.amazonaws.com/KakaoTalk_20250519_021541789.png"
+          alt="축제 로고"
+          className={style.logo}
+        />
+        <h1 className={style.title}>금오공대 축제 주막 정보</h1>
+      </header>
+
+      {/* 가게 리스트 */}
+      <div className={style.scrollArea}>
+        {data.map((store) => (
+          <Link
+            to={"/storeDetail"}
+            key={store.storeId}
+            state={{ storeId: store.storeId }}
+          >
+            <StoreItem
+              storeName={store.storeName}
+              isOpened={store.isOpened}
+              headImageUrl={store.headImageUrl}
+              description={store.description}
+              storeInfoImageUrl={store.storeDetailImageUrls || []}
+            />
+          </Link>
+        ))}
+        {isLoading && <p>Loading...</p>}
+      </div>
     </div>
   );
 };
