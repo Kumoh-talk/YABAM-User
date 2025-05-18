@@ -9,7 +9,7 @@ const StoreInfo = ({ storeInfo }: storeInfoType) => {
     <div className={style.storeInfo}>
       <div className={style.title}>
         <h3>{storeInfo?.storeName}</h3>
-        <p className={style.open}>
+        <p className={storeInfo?.isOpen ? style.open : style.closed}>
           {storeInfo?.isOpen ? "영업중" : "영업종료"}
         </p>
       </div>
