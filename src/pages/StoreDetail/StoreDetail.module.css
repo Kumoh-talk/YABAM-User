@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.scrollImgWrapper {
+  position: relative;
+}
+
 .scrollImg {
   display: flex;
   overflow: hidden;
@@ -12,19 +16,11 @@
 
 .scrollImg img {
   width: 100%;
-  height: auto;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-.scrollImg img.hidden {
-  display: none;
-}
-
-.scrollImg img.visible {
-  display: block;
-}
-
-.scrollImg svg {
+.scrollImgButton {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -37,11 +33,10 @@
   z-index: 10;
 }
 
-.scrollImg svg:first-child {
+.scrollImgButton.left {
   left: 16px;
 }
-
-.scrollImg svg:last-child {
+.scrollImgButton.right {
   right: 16px;
 }
 
