@@ -44,6 +44,15 @@
 .status {
   margin: 0;
   font-size: 14px;
+  font-weight: bold;
+}
+
+.status.opened {
+  color: #6299fe; /* 영업중일 때 글자색 */
+}
+
+.status.closed {
+  color: #626161; /* 영업 종료일 때 글자색 */
 }
 
 .storeInfoImageUrl {

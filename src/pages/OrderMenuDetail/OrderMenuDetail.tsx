@@ -50,7 +50,7 @@ const OrderMenuDetail = () => {
       </div>
       <div className={style.contents}>
         {menu.menuIsRecommended && (
-          <p className={style.recommended}>사장님 추천!</p>
+          <p className={style.recommended}>님 추천!</p>
         )}
         <h2>{menu.menuName}</h2>
         <p>{menu.menuDescription}</p>

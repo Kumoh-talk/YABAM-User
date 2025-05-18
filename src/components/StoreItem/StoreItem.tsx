@@ -24,7 +24,13 @@ const StoreItem = ({
         <div className={style.title}>
           <h4>{storeName}</h4>
           <p className={style.description}>{description}</p>
-          <p className={style.status}>{isOpened ? "영업중" : "영업 종료"}</p>
+          <p
+            className={`${style.status} ${
+              isOpened ? style.opened : style.closed
+            }`}
+          >
+            {isOpened ? "영업중" : "영업 종료"}
+          </p>
         </div>
       </div>
       <div className={style.storeInfoImageUrl}>
