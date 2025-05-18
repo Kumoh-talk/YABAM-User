@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import "./App.css";
+import "swiper/css";
+import "swiper/css/pagination";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import StoreDetail from "./pages/StoreDetail/StoreDetail";
