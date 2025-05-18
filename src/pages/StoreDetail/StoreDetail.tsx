@@ -64,7 +64,7 @@ const StoreDetail = () => {
             }}
           >
             {imgSlide.map((slide, index) => (
-              <SwiperSlide key={index}>
+              <SwiperSlide key={index} className={style.imgSlide}>
                 <img src={slide} alt={`가게 이미지 ${index + 1}`} />
               </SwiperSlide>
             ))}
