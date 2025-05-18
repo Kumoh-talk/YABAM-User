@@ -63,11 +63,18 @@ const StoreDetail = () => {
               setSwiper(e);
             }}
           >
-            {imgSlide.map((slide, index) => (
+          {imgSlide.map((slide, index) => {
+            const fixedUrl =
+              slide.startsWith("https:/") && !slide.startsWith("https://")
+                ? slide.replace("https:/", "https://")
+                : slide;
+
+            return (
               <SwiperSlide key={index} className={style.imgSlide}>
-                <img src={slide} alt={`가게 이미지 ${index + 1}`} />
+                <img src={fixedUrl} alt={`가게 이미지 ${index + 1}`}/>
               </SwiperSlide>
-            ))}
+            );
+          })}
           </Swiper>
           {imgSlide.length > 1 && (
             <>
