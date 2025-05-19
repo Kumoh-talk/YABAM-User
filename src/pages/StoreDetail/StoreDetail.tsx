@@ -18,10 +18,9 @@ const StoreDetail = () => {
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>([]);
   const [swiper, setSwiper] = useState<SwiperClass>();
-
-  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">(
-    "menu",
-  );
+  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">("menu");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupImage, setPopupImage] = useState<string>("");
 
   const fetchStoreInfo = async () => {
     try {
@@ -37,8 +36,19 @@ const StoreDetail = () => {
   const handlePrev = () => {
     swiper?.slidePrev();
   };
+
   const handleNext = () => {
     swiper?.slideNext();
+  };
+
+  const handleImageClick = (imageUrl: string) => {
+    setPopupImage(imageUrl);
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setPopupImage("");
   };
 
   useEffect(() => {
@@ -63,18 +73,22 @@ const StoreDetail = () => {
               setSwiper(e);
             }}
           >
-          {imgSlide.map((slide, index) => {
-            const fixedUrl =
-              slide.startsWith("https:/") && !slide.startsWith("https://")
-                ? slide.replace("https:/", "https://")
-                : slide;
+            {imgSlide.map((slide, index) => {
+              const fixedUrl =
+                slide.startsWith("https:/") && !slide.startsWith("https://")
+                  ? slide.replace("https:/", "https://")
+                  : slide;
 
-            return (
-              <SwiperSlide key={index} className={style.imgSlide}>
-                <img src={fixedUrl} alt={`가게 이미지 ${index + 1}`}/>
-              </SwiperSlide>
-            );
-          })}
+              return (
+                <SwiperSlide
+                  key={index}
+                  className={style.imgSlide}
+                  onClick={() => handleImageClick(fixedUrl)}
+                >
+                  <img src={fixedUrl} alt={`가게 이미지 ${index + 1}`} />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
           {imgSlide.length > 1 && (
             <>
@@ -139,6 +153,14 @@ const StoreDetail = () => {
           />
         )}
       </div>
+
+      {isPopupOpen && (
+        <div className={style.popupOverlay} onClick={closePopup}>
+          <div className={style.popupContent} onClick={(e) => e.stopPropagation()}>
+            <img src={popupImage} alt="가게 이미지 확대" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
