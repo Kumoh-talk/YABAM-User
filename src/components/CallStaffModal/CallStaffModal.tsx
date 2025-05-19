@@ -10,7 +10,6 @@ type modalType = {
 
 const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
   const requestItem: string[] = [
-    "물",
     "앞접시",
     "휴지",
     "물티슈",
