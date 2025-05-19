@@ -10,7 +10,7 @@ import { getStoreInfo } from "../../api/store";
 import Menu from "../Menu/Menu";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
-import NaverMap from "../../components/NaverMap/NaverMap";
+import KakaoMap from "../../components/KakaoMap/KakaoMap";
 
 const StoreDetail = () => {
   const location = useLocation();
@@ -131,9 +131,9 @@ const StoreDetail = () => {
         {storeInfo ? (
           <>
             {selectedMenuBar === "map" ? (
-              <div className={style.naverMap}>
+              <div className={style.kakaoMap}>
                 {storeInfo.latitude && storeInfo.longitude ? (
-                  <NaverMap
+                  <KakaoMap
                     latitude={storeInfo.latitude}
                     longitude={storeInfo.longitude}
                   />
