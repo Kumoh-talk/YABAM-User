@@ -107,7 +107,7 @@ const OrderCart = () => {
       setIsProcessing(false);
       setCartItems([]); // 주문 완료 후 장바구니 비우기
       closeOrderModal();
-      navigate(-1);
+      navigate(`/orderStatus?receiptid=${receiptId}`);
     } catch (error) {
       toast.error("주문을 생성하는 데 실패했습니다. 다시 시도해주세요.");
       buttonRef.current = false;
