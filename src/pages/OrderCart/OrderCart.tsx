@@ -97,8 +97,8 @@ const OrderCart = () => {
     if (!receiptId || buttonRef.current) return;
 
     try {
-      await createOrderWithCart(receiptId);
       buttonRef.current = true;
+      await createOrderWithCart(receiptId);
       console.log("주문하기");
       toast.success("주문이 성공적으로 완료되었습니다!");
       buttonRef.current = false;
@@ -107,6 +107,7 @@ const OrderCart = () => {
       navigate(-1);
     } catch (error) {
       toast.error("주문을 생성하는 데 실패했습니다. 다시 시도해주세요.");
+      buttonRef.current = false;
     }
   };
 

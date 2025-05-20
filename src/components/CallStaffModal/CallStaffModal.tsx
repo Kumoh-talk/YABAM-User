@@ -57,8 +57,8 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
     }
 
     try {
-      await callStaff(receiptId, requestMessage);
       buttonRef.current = true;
+      await callStaff(receiptId, requestMessage);
       toast.update(toastId, {
         render: "호출 요청이 성공적으로 전송되었습니다.",
         type: "success",
@@ -75,6 +75,7 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
         isLoading: false,
         autoClose: 2000,
       });
+      buttonRef.current = false;
     }
   };
 

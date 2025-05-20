@@ -34,9 +34,9 @@ const OrderMenuDetail = () => {
     }
 
     try {
+      buttonRef.current = true;
       await addOrUpdateCartItem(receiptId!, menu.menuId, count);
       console.log("메뉴 담기");
-      buttonRef.current = true;
       toast.success("장바구니에 메뉴가 추가되었습니다!");
       buttonRef.current = false;
       navigate(-1);
@@ -45,12 +45,12 @@ const OrderMenuDetail = () => {
       toast.error(
         "장바구니에 메뉴를 추가하는 데 실패했습니다. 다시 시도해주세요."
       );
+      buttonRef.current = false;
     }
   };
 
   if (!menu) {
-    <Loading msg="메뉴 정보를 불러올 수 없습니다." />;
-    return;
+    return <Loading msg="메뉴 정보를 불러올 수 없습니다." />;
   }
 
   return (
