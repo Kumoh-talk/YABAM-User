@@ -97,8 +97,8 @@ const OrderCart = () => {
     if (!receiptId || buttonRef.current) return;
 
     try {
-      buttonRef.current = true;
       await createOrderWithCart(receiptId);
+      buttonRef.current = true;
       console.log("주문하기");
       toast.success("주문이 성공적으로 완료되었습니다!");
       buttonRef.current = false;

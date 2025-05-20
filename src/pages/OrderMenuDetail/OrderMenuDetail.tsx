@@ -34,9 +34,9 @@ const OrderMenuDetail = () => {
     }
 
     try {
-      buttonRef.current = true;
-      console.log("메뉴 담기");
       await addOrUpdateCartItem(receiptId!, menu.menuId, count);
+      console.log("메뉴 담기");
+      buttonRef.current = true;
       toast.success("장바구니에 메뉴가 추가되었습니다!");
       buttonRef.current = false;
       navigate(-1);

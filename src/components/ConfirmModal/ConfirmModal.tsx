@@ -33,7 +33,7 @@ const ConfirmModal = ({
             onClick={onAction}
             disabled={buttonStatus}
           >
-            {actionText}
+            {buttonStatus ? "처리중" : `${actionText}`}
           </button>
         </div>
       </div>

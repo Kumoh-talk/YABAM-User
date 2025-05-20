@@ -57,8 +57,8 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
     }
 
     try {
-      buttonRef.current = true;
       await callStaff(receiptId, requestMessage);
+      buttonRef.current = true;
       toast.update(toastId, {
         render: "호출 요청이 성공적으로 전송되었습니다.",
         type: "success",
@@ -113,7 +113,7 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
             onClick={handleSave}
             disabled={buttonRef.current}
           >
-            저장
+            {buttonRef.current ? "처리중" : "저장"}
           </button>
         </div>
       </div>
