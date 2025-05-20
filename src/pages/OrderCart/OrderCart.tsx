@@ -19,6 +19,7 @@ const OrderCart = () => {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const buttonRef = useRef(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // 총 가격 및 수량 계산
   const totalPrice = cartItems.reduce(
@@ -98,16 +99,19 @@ const OrderCart = () => {
 
     try {
       buttonRef.current = true;
+      setIsProcessing(true);
       await createOrderWithCart(receiptId);
       console.log("주문하기");
       toast.success("주문이 성공적으로 완료되었습니다!");
       buttonRef.current = false;
+      setIsProcessing(false);
       setCartItems([]); // 주문 완료 후 장바구니 비우기
       closeOrderModal();
       navigate(-1);
     } catch (error) {
       toast.error("주문을 생성하는 데 실패했습니다. 다시 시도해주세요.");
       buttonRef.current = false;
+      setIsProcessing(false);
     }
   };
 
@@ -179,7 +183,7 @@ const OrderCart = () => {
           actionText="주문하기"
           onCancel={closeOrderModal}
           onAction={createOrder}
-          buttonStatus={buttonRef.current}
+          isProcessing={isProcessing}
         />
       )}
     </div>

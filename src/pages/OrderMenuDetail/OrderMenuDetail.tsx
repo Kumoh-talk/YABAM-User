@@ -17,6 +17,7 @@ const OrderMenuDetail = () => {
   const [count, setCount] = useState<number>(1);
 
   const buttonRef = useRef(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const plusCount = () => {
     if (count >= 10) return;
@@ -35,10 +36,12 @@ const OrderMenuDetail = () => {
 
     try {
       buttonRef.current = true;
+      setIsProcessing(true);
       await addOrUpdateCartItem(receiptId!, menu.menuId, count);
       console.log("메뉴 담기");
       toast.success("장바구니에 메뉴가 추가되었습니다!");
       buttonRef.current = false;
+      setIsProcessing(false);
       navigate(-1);
     } catch (error) {
       console.error("장바구니 추가 실패:", error);
@@ -46,6 +49,7 @@ const OrderMenuDetail = () => {
         "장바구니에 메뉴를 추가하는 데 실패했습니다. 다시 시도해주세요."
       );
       buttonRef.current = false;
+      setIsProcessing(false);
     }
   };
 
@@ -79,8 +83,8 @@ const OrderMenuDetail = () => {
         </div>
       </div>
       <div className={style.footer}>
-        <button onClick={saveMenu} disabled={buttonRef.current}>
-          {buttonRef.current ? "처리중입니다..." : `메뉴 담기(${count}개)`}
+        <button onClick={saveMenu} disabled={isProcessing}>
+          {isProcessing ? "처리중입니다..." : `메뉴 담기(${count}개)`}
         </button>
       </div>
     </div>

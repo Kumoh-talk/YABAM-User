@@ -23,6 +23,7 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
   const [requestMessage, setRequestMessage] = useState<string>("");
 
   const buttonRef = useRef(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const toggleTagItem = (text: string) => {
     setSelected((prev) => {
@@ -45,19 +46,21 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
   };
 
   const handleSave = async () => {
+    console.log("직원호출");
+
     if (!requestMessage.trim()) {
       toast.error("요청 메시지를 입력해주세요.");
       return;
     }
 
-    const toastId = toast.loading("요청을 전송 중입니다...");
-
     if (buttonRef.current) {
       return;
     }
+    const toastId = toast.loading("요청을 전송 중입니다...");
 
     try {
       buttonRef.current = true;
+      setIsProcessing(true);
       await callStaff(receiptId, requestMessage);
       toast.update(toastId, {
         render: "호출 요청이 성공적으로 전송되었습니다.",
@@ -66,6 +69,7 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
         autoClose: 2000,
       });
       buttonRef.current = false;
+      setIsProcessing(false);
       closeModal(); // 모달 닫기
     } catch (error) {
       console.error("호출 요청 실패:", error);
@@ -76,6 +80,7 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
         autoClose: 2000,
       });
       buttonRef.current = false;
+      setIsProcessing(false);
     }
   };
 
@@ -112,9 +117,9 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
           <button
             className={style.save}
             onClick={handleSave}
-            disabled={buttonRef.current}
+            disabled={isProcessing}
           >
-            {buttonRef.current ? "처리중" : "저장"}
+            {isProcessing ? "처리중" : "저장"}
           </button>
         </div>
       </div>

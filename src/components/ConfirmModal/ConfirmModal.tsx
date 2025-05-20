@@ -7,7 +7,7 @@ type ConfirmModalProps = {
   actionText: string; // 액션 버튼 텍스트
   onCancel: () => void; // 취소 버튼 클릭 핸들러
   onAction: () => void; // 액션 버튼 클릭 핸들러
-  buttonStatus?: boolean;
+  isProcessing?: boolean;
 };
 
 const ConfirmModal = ({
@@ -17,7 +17,7 @@ const ConfirmModal = ({
   actionText,
   onCancel,
   onAction,
-  buttonStatus,
+  isProcessing,
 }: ConfirmModalProps) => {
   return (
     <div className={style.overlay} onClick={onCancel}>
@@ -31,9 +31,9 @@ const ConfirmModal = ({
           <button
             className={style.actionButton}
             onClick={onAction}
-            disabled={buttonStatus}
+            disabled={isProcessing}
           >
-            {buttonStatus ? "처리중" : `${actionText}`}
+            {isProcessing ? "처리중" : `${actionText}`}
           </button>
         </div>
       </div>
