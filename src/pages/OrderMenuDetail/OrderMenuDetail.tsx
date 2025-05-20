@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; // useNavigate 추가
 import style from "./OrderMenuDetail.module.css";
 import { LuPlus, LuMinus } from "react-icons/lu";
@@ -15,6 +15,8 @@ const OrderMenuDetail = () => {
   const menu = location.state?.menu as MenuInfoResponse;
   const [count, setCount] = useState<number>(1);
 
+  const buttonRef = useRef(false);
+
   const plusCount = () => {
     if (count >= 10) return;
     setCount((prev) => prev + 1);
@@ -26,9 +28,16 @@ const OrderMenuDetail = () => {
   };
 
   const saveMenu = async () => {
+    if (buttonRef.current) {
+      return;
+    }
+
     try {
+      buttonRef.current = true;
+      console.log("메뉴 담기");
       await addOrUpdateCartItem(receiptId!, menu.menuId, count);
       toast.success("장바구니에 메뉴가 추가되었습니다!");
+      buttonRef.current = false;
       navigate(-1);
     } catch (error) {
       console.error("장바구니 추가 실패:", error);
@@ -39,8 +48,8 @@ const OrderMenuDetail = () => {
   };
 
   if (!menu) {
-    return 
-      <Loading msg='메뉴 정보를 불러올 수 없습니다.'/>;
+    <Loading msg="메뉴 정보를 불러올 수 없습니다." />;
+    return;
   }
 
   return (
@@ -50,7 +59,7 @@ const OrderMenuDetail = () => {
       </div>
       <div className={style.contents}>
         {menu.menuIsRecommended && (
-          <p className={style.recommended}>님 추천!</p>
+          <p className={style.recommended}>주막장 추천!</p>
         )}
         <h2>{menu.menuName}</h2>
         <p>{menu.menuDescription}</p>
@@ -71,7 +80,9 @@ const OrderMenuDetail = () => {
         </div>
       </div>
       <div className={style.footer}>
-        <button onClick={saveMenu}>메뉴 담기({count}개)</button>
+        <button onClick={saveMenu} disabled={buttonRef.current}>
+          {buttonRef.current ? "처리중입니다..." : `메뉴 담기(${count}개)`}
+        </button>
       </div>
     </div>
   );

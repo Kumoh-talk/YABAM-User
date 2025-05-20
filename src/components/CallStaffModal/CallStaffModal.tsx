@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { callStaff } from "../../api/callStaff";
 import style from "./CallStaffModal.module.css";
@@ -21,6 +21,8 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
 
   const [selected, setSelected] = useState<string[]>([]);
   const [requestMessage, setRequestMessage] = useState<string>("");
+
+  const buttonRef = useRef(false);
 
   const toggleTagItem = (text: string) => {
     setSelected((prev) => {
@@ -50,7 +52,12 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
 
     const toastId = toast.loading("요청을 전송 중입니다...");
 
+    if (buttonRef.current) {
+      return;
+    }
+
     try {
+      buttonRef.current = true;
       await callStaff(receiptId, requestMessage);
       toast.update(toastId, {
         render: "호출 요청이 성공적으로 전송되었습니다.",
@@ -58,6 +65,7 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
         isLoading: false,
         autoClose: 2000,
       });
+      buttonRef.current = false;
       closeModal(); // 모달 닫기
     } catch (error) {
       console.error("호출 요청 실패:", error);
@@ -100,7 +108,11 @@ const CallStaffModal = ({ closeModal, receiptId }: modalType) => {
           <button className={style.cancel} onClick={closeModal}>
             취소
           </button>
-          <button className={style.save} onClick={handleSave}>
+          <button
+            className={style.save}
+            onClick={handleSave}
+            disabled={buttonRef.current}
+          >
             저장
           </button>
         </div>
