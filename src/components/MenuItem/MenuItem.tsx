@@ -24,7 +24,9 @@ const MenuItem = ({ menu, onClick }: MenuItemProps) => {
   return (
     <>
       <div
-        className={`${style.menuItem} ${menu.menuIsSoldOut ? style.soldOut : ""}`}
+        className={`${style.menuItem} ${
+          menu.menuIsSoldOut ? style.soldOut : ""
+        }`}
         onClick={onClick}
       >
         <div className={style.img} onClick={handleImageClick}>
@@ -32,7 +34,7 @@ const MenuItem = ({ menu, onClick }: MenuItemProps) => {
         </div>
         <div className={style.contents}>
           {menu.menuIsSoldOut && <p className={style.soldOutText}>품절</p>}
-          {menu.menuIsRecommended && <Tag content="주인장 추천!" />}
+          {menu.menuIsRecommended && <Tag content="주막장 추천!" />}
           <h4>{menu.menuName}</h4>
           <p className={style.description}>{menu.menuDescription}</p>
           <p className={style.price}>{menu.menuPrice.toLocaleString()}원</p>
@@ -41,7 +43,10 @@ const MenuItem = ({ menu, onClick }: MenuItemProps) => {
 
       {isPopupOpen && (
         <div className={style.popupOverlay} onClick={closePopup}>
-          <div className={style.popupContent} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={style.popupContent}
+            onClick={(e) => e.stopPropagation()}
+          >
             <img src={menu.menuImageUrl} alt={menu.menuName} />
           </div>
         </div>

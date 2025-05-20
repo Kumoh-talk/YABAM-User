@@ -26,17 +26,6 @@
   padding: 16px;
 }
 
-.recommended {
-  display: inline-block;
-  background-color: #6299FE;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin-bottom: 8px;
-}
-
 .contents > h2 {
   font-size: 24px;
   font-weight: bold;
@@ -53,7 +42,7 @@
 .contents > .price {
   font-size: 20px;
   font-weight: bold;
-  color: #6299FE;
+  color: #6299fe;
   margin-top: 8px;
 }
 
@@ -126,7 +115,7 @@
   padding: 16px;
   border: none;
   border-radius: 12px;
-  background-color: #6299FE;
+  background-color: #6299fe;
   color: white;
   font-size: 18px;
   font-weight: bold;

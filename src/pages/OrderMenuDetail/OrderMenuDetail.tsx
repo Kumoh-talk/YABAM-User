@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { addOrUpdateCartItem } from "../../api/cart";
 import type { MenuInfoResponse } from "../../types/Menu";
 import Loading from "../../components/Loading/Loading";
+import Tag from "../../components/Tag/Tag";
 
 const OrderMenuDetail = () => {
   const navigate = useNavigate();
@@ -58,9 +59,7 @@ const OrderMenuDetail = () => {
         <img src={menu.menuImageUrl} alt={menu.menuName} />
       </div>
       <div className={style.contents}>
-        {menu.menuIsRecommended && (
-          <p className={style.recommended}>주막장 추천!</p>
-        )}
+        {menu.menuIsRecommended && <Tag content="주막장 추천!" />}
         <h2>{menu.menuName}</h2>
         <p>{menu.menuDescription}</p>
         <p>{menu.menuPrice.toLocaleString()}원</p>
