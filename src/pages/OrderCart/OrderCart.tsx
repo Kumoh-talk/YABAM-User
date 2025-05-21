@@ -47,7 +47,7 @@ const OrderCart = () => {
 
     const intervalId = setInterval(() => {
       fetchCartItems();
-    }, 1000);
+    }, 3000);
 
     return () => {
       clearInterval(intervalId); // 컴포넌트 언마운트 시 정리
