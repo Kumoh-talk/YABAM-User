@@ -1,7 +1,4 @@
 .storeItem {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
   padding: 20px 0;
   border-bottom: 1px solid #d7d7d7;
 }
@@ -12,7 +9,6 @@
 }
 
 .storeImg {
-  background-color: blue;
   width: 80px;
   height: 80px;
   border-radius: 8px;
@@ -38,7 +34,7 @@
   white-space: normal;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
 
