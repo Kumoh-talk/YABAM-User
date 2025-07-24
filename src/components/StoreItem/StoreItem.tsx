@@ -33,20 +33,6 @@ const StoreItem = ({
           </p>
         </div>
       </div>
-      <div className={style.storeInfoImageUrl}>
-        {storeInfoImageUrl.map((url, index) => {
-          const fixedUrl =
-            url.startsWith("https:/") && !url.startsWith("https://")
-              ? url.replace("https:/", "https://")
-              : url;
-
-          return (
-            <div key={index} className={style.storeInfoImageUrlItem}>
-              <img src={fixedUrl} alt={`가게 이미지 ${index + 1}`} />
-            </div>
-          );
-        })}
-      </div>
     </div>
   );
 };
