@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getStoreList } from "../../api/store";
 import type { storeInfoDtos, StoreListResponse } from "../../types/Store";
+import StoreSkeleton from "../../components/Skeleton/StoreSkeleton/StoreSkeleton";
 
 const Home = () => {
   const [size] = useState(10); // 한 번에 가져올 데이터 개수
@@ -63,22 +64,25 @@ const Home = () => {
 
       {/* 가게 리스트 */}
       <div className={style.scrollArea}>
-        {data.map((store) => (
-          <Link
-            to={"/storeDetail"}
-            key={store.storeId}
-            state={{ storeId: store.storeId }}
-          >
-            <StoreItem
-              storeName={store.storeName}
-              isOpened={store.isOpened}
-              headImageUrl={store.headImageUrl}
-              description={store.description}
-              storeInfoImageUrl={store.storeDetailImageUrls || []}
-            />
-          </Link>
-        ))}
-        {isLoading && <p>Loading...</p>}
+        {isLoading && data.length === 0
+          ? Array.from({ length: 6 }).map((_, idx) => (
+              <StoreSkeleton key={idx} />
+            ))
+          : data.map((store) => (
+              <Link
+                to={"/storeDetail"}
+                key={store.storeId}
+                state={{ storeId: store.storeId }}
+              >
+                <StoreItem
+                  storeName={store.storeName}
+                  isOpened={store.isOpened}
+                  headImageUrl={store.headImageUrl}
+                  description={store.description}
+                  storeInfoImageUrl={store.storeDetailImageUrls || []}
+                />
+              </Link>
+            ))}
       </div>
     </div>
   );
