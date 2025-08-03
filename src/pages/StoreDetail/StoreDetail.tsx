@@ -11,6 +11,8 @@ import Menu from "../Menu/Menu";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
 import KakaoMap from "../../components/KakaoMap/KakaoMap";
+import MenuSkeleton from "../../components/Skeleton/MenuSkeleton/MenuSkeleton";
+import StoreInfoSkeleton from "../../components/Skeleton/StoreInfoSkeleton/StoreInfoSkeleton";
 
 const StoreDetail = () => {
   const location = useLocation();
@@ -18,7 +20,9 @@ const StoreDetail = () => {
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>([]);
   const [swiper, setSwiper] = useState<SwiperClass>();
-  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">("menu");
+  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">(
+    "menu"
+  );
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupImage, setPopupImage] = useState<string>("");
 
@@ -107,7 +111,11 @@ const StoreDetail = () => {
         <div className={style.noImage}>이미지가 없습니다.</div>
       )}
       <div>
-        <StoreInfo storeInfo={storeInfo} />
+        {storeInfo ? (
+          <StoreInfo storeInfo={storeInfo} />
+        ) : (
+          <StoreInfoSkeleton />
+        )}
       </div>
       <div className={style.menuBar}>
         <button
@@ -146,17 +154,16 @@ const StoreDetail = () => {
             )}
           </>
         ) : (
-          <Loading
-            msg={`${
-              selectedMenuBar === "map" ? "가게 위치" : "가게 메뉴"
-            } 정보를 불러오지 못했습니다.`}
-          />
+          Array.from({ length: 3 }).map((_, idx) => <MenuSkeleton key={idx} />)
         )}
       </div>
 
       {isPopupOpen && (
         <div className={style.popupOverlay} onClick={closePopup}>
-          <div className={style.popupContent} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={style.popupContent}
+            onClick={(e) => e.stopPropagation()}
+          >
             <img src={popupImage} alt="가게 이미지 확대" />
           </div>
         </div>
