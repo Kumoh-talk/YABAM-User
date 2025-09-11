@@ -4,7 +4,7 @@ import StoreInfo from "../../components/StoreInfo/StoreInfo";
 import style from "./StoreDetail.module.css";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { StoreResponse } from "../../types/Store";
 import { getStoreInfo } from "../../api/store";
 import Menu from "../Menu/Menu";
@@ -15,6 +15,10 @@ import StoreInfoSkeleton from "../../components/Skeleton/StoreInfoSkeleton/Store
 const StoreDetail = () => {
   const location = useLocation();
   const storeId = location.state?.storeId;
+  const { storeId: storeIdParam } = useParams();
+  const navigate = useNavigate();
+  const resolvedStoreId =
+    storeId ?? (storeIdParam ? Number(storeIdParam) : undefined);
 
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>([]);
@@ -27,7 +31,8 @@ const StoreDetail = () => {
 
   const fetchStoreInfo = async () => {
     try {
-      const info = await getStoreInfo(storeId);
+      if (!resolvedStoreId) return;
+      const info = await getStoreInfo(resolvedStoreId);
       setStoreInfo(info);
       setImgSlide(info?.detailImageUrls);
     } catch (e) {
@@ -55,8 +60,14 @@ const StoreDetail = () => {
   };
 
   useEffect(() => {
+    if (!resolvedStoreId) {
+      toast.error("유효하지 않은 가게입니다.");
+      navigate(-1);
+      return;
+    }
+
     fetchStoreInfo();
-  }, [storeId]);
+  }, [resolvedStoreId]);
 
   return (
     <div className={style.storeDetail}>
