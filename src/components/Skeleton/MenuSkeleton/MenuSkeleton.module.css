@@ -12,7 +12,8 @@
   gap: 12px;
   padding: 16px 0;
   background-color: white;
-  border-bottom: 20px solid #ececec;
+  /* border-bottom: 20px solid #ececec; */
+  border-bottom: 1px solid #ececec;
 }
 
 .skeletonMenuWrapper:last-child {
