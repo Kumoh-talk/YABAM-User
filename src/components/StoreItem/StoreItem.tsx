@@ -5,7 +5,6 @@ type StoreItemProps = {
   isOpened: boolean;
   headImageUrl: string;
   description: string;
-  storeInfoImageUrl: string[];
 };
 
 const StoreItem = ({
@@ -13,7 +12,6 @@ const StoreItem = ({
   isOpened,
   headImageUrl,
   description,
-  storeInfoImageUrl,
 }: StoreItemProps) => {
   return (
     <div className={style.storeItem}>
