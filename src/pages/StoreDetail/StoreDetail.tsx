@@ -17,8 +17,7 @@ const StoreDetail = () => {
   const storeId = location.state?.storeId;
   const { storeId: storeIdParam } = useParams();
   const navigate = useNavigate();
-  const resolvedStoreId =
-    storeId ?? (storeIdParam ? Number(storeIdParam) : undefined);
+  const resolvedStoreId = storeId != null ? String(storeId) : storeIdParam;
 
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>([]);
@@ -34,7 +33,7 @@ const StoreDetail = () => {
       if (!resolvedStoreId) return;
       const info = await getStoreInfo(resolvedStoreId);
       setStoreInfo(info);
-      setImgSlide(info?.detailImageUrls);
+      setImgSlide(info?.detailImageUrls ?? []);
     } catch (e) {
       toast.error("가게 정보를 불러오는 데 실패했습니다");
       console.error("가게 정보를 불러오는 데 실패했습니다:", e);
