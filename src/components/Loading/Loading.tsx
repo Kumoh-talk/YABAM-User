@@ -1,5 +1,5 @@
-import style from "./Loading.module.css"
-import { RiLoader2Fill } from "react-icons/ri";
+import style from "./Loading.module.css";
+import LoadingGIF from "../../assets/Loading.gif";
 
 type LoadingProps = {
   msg: string;
@@ -8,8 +8,8 @@ type LoadingProps = {
 const Loading = ({ msg }: LoadingProps) => {
   return (
     <div className={style.loading}>
-     <RiLoader2Fill />
-     <p>{msg}</p>
+      <img src={LoadingGIF} />
+      <p>{msg}</p>
     </div>
   );
 };

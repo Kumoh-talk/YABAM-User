@@ -4,6 +4,7 @@ import { getNonAdjustReceipt, createReceipt } from "../../api/receipt";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../../components/Loading/Loading";
+import style from "./TableValidationPage.module.css";
 
 const TableValidationPage = () => {
   const [searchParams] = useSearchParams();
@@ -36,7 +37,10 @@ const TableValidationPage = () => {
         } else {
           // 미정산 영수증이 없으면 새로 생성
           setLoadingMessage("QR코드가 인식된 테이블과 연결 중입니다");
-          const { receiptId: newReceiptId } = await createReceipt(storeId, tableId);
+          const { receiptId: newReceiptId } = await createReceipt(
+            storeId,
+            tableId
+          );
           redirectToOrderMenu(newReceiptId);
         }
       } catch (error) {
@@ -49,7 +53,7 @@ const TableValidationPage = () => {
   }, [tableId, storeId, navigate]);
 
   return (
-    <div style={{ textAlign: "center", paddingTop: "100px", fontSize: "18px" }}>
+    <div className={style.wrapper}>
       <Loading msg={loadingMessage} />
     </div>
   );

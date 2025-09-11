@@ -1,0 +1,53 @@
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.skeletonMenuWrapper {
+  display: flex;
+  gap: 12px;
+  padding: 16px 0;
+  background-color: white;
+  /* border-bottom: 20px solid #ececec; */
+  border-bottom: 1px solid #ececec;
+}
+
+.skeletonMenuWrapper:last-child {
+  border-bottom: none;
+}
+
+.skeletonMenuImage,
+.skeletonMenuContents > p {
+  background: linear-gradient(90deg, #ececec 35%, #f5f5f5 50%, #ececec 65%);
+  background-size: 200% auto;
+  animation: skeleton-loading 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+.skeletonMenuImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+}
+
+.skeletonMenuContents {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.title,
+.price {
+  margin: 0;
+  height: 19px;
+}
+
+.description {
+  margin: 0;
+  height: 14px;
+}

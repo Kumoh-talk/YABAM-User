@@ -39,7 +39,7 @@ const OrderMenu = () => {
       {modalOpen && receiptId && (
         <CallStaffModal closeModal={closeModal} receiptId={receiptId} />
       )}
-      <div>
+      <div className={style.wrapper}>
         <header>
           <div className={style.top}>
             <button

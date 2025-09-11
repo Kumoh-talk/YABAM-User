@@ -3,7 +3,6 @@ import type { MenuCategory, MenuInfoResponse } from "../../types/Menu";
 import MenuList from "../../components/MenuList/MenuList";
 import { getMenuCategories, getMenusByCategory } from "../../api/menu";
 import { toast } from "react-toastify";
-import Loading from "../../components/Loading/Loading";
 
 type menuType = {
   storeId: number;
@@ -41,24 +40,17 @@ const Menu = ({ storeId, onMenuClick }: menuType) => {
     fetchMenuData();
   }, [storeId]);
 
-  if (loading) {
-    return (
-      <>
-        <Loading msg="로딩중..." />
-      </>
-    );
-  }
-
   return (
     <>
       {categories?.map((category) => (
         <MenuList
           key={category.menuCategoryId}
+          loading={loading}
           menus={menus}
           category={category}
           onMenuClick={onMenuClick}
         />
-      ))}
+      ))}{" "}
     </>
   );
 };

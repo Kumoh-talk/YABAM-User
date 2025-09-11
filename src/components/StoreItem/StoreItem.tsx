@@ -5,7 +5,6 @@ type StoreItemProps = {
   isOpened: boolean;
   headImageUrl: string;
   description: string;
-  storeInfoImageUrl: string[];
 };
 
 const StoreItem = ({
@@ -13,7 +12,6 @@ const StoreItem = ({
   isOpened,
   headImageUrl,
   description,
-  storeInfoImageUrl,
 }: StoreItemProps) => {
   return (
     <div className={style.storeItem}>
@@ -32,20 +30,6 @@ const StoreItem = ({
             {isOpened ? "영업중" : "영업 종료"}
           </p>
         </div>
-      </div>
-      <div className={style.storeInfoImageUrl}>
-        {storeInfoImageUrl.map((url, index) => {
-          const fixedUrl =
-            url.startsWith("https:/") && !url.startsWith("https://")
-              ? url.replace("https:/", "https://")
-              : url;
-
-          return (
-            <div key={index} className={style.storeInfoImageUrlItem}>
-              <img src={fixedUrl} alt={`가게 이미지 ${index + 1}`} />
-            </div>
-          );
-        })}
       </div>
     </div>
   );

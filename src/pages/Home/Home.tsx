@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getStoreList } from "../../api/store";
 import type { storeInfoDtos, StoreListResponse } from "../../types/Store";
+import StoreSkeleton from "../../components/Skeleton/StoreSkeleton/StoreSkeleton";
 
 const Home = () => {
   const [size] = useState(10); // 한 번에 가져올 데이터 개수
@@ -74,11 +75,14 @@ const Home = () => {
               isOpened={store.isOpened}
               headImageUrl={store.headImageUrl}
               description={store.description}
-              storeInfoImageUrl={store.storeDetailImageUrls || []}
             />
           </Link>
         ))}
-        {isLoading && <p>Loading...</p>}
+
+        {isLoading &&
+          Array.from({ length: size }).map((_, idx) => (
+            <StoreSkeleton key={idx} />
+          ))}
       </div>
     </div>
   );

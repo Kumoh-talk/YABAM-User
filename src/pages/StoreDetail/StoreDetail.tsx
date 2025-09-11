@@ -4,29 +4,36 @@ import StoreInfo from "../../components/StoreInfo/StoreInfo";
 import style from "./StoreDetail.module.css";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { StoreResponse } from "../../types/Store";
 import { getStoreInfo } from "../../api/store";
 import Menu from "../Menu/Menu";
 import { toast } from "react-toastify";
-import Loading from "../../components/Loading/Loading";
 import KakaoMap from "../../components/KakaoMap/KakaoMap";
+import StoreInfoSkeleton from "../../components/Skeleton/StoreInfoSkeleton/StoreInfoSkeleton";
 
 const StoreDetail = () => {
   const location = useLocation();
   const storeId = location.state?.storeId;
+  const { storeId: storeIdParam } = useParams();
+  const navigate = useNavigate();
+  const resolvedStoreId = storeId != null ? String(storeId) : storeIdParam;
+
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>([]);
   const [swiper, setSwiper] = useState<SwiperClass>();
-  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">("menu");
+  const [selectedMenuBar, setSelectedMenuBar] = useState<"menu" | "map">(
+    "menu"
+  );
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupImage, setPopupImage] = useState<string>("");
 
   const fetchStoreInfo = async () => {
     try {
-      const info = await getStoreInfo(storeId);
+      if (!resolvedStoreId) return;
+      const info = await getStoreInfo(resolvedStoreId);
       setStoreInfo(info);
-      setImgSlide(info?.detailImageUrls);
+      setImgSlide(info?.detailImageUrls ?? []);
     } catch (e) {
       toast.error("가게 정보를 불러오는 데 실패했습니다");
       console.error("가게 정보를 불러오는 데 실패했습니다:", e);
@@ -52,8 +59,14 @@ const StoreDetail = () => {
   };
 
   useEffect(() => {
+    if (!resolvedStoreId) {
+      toast.error("유효하지 않은 가게입니다.");
+      navigate(-1);
+      return;
+    }
+
     fetchStoreInfo();
-  }, [storeId]);
+  }, [resolvedStoreId]);
 
   return (
     <div className={style.storeDetail}>
@@ -107,7 +120,11 @@ const StoreDetail = () => {
         <div className={style.noImage}>이미지가 없습니다.</div>
       )}
       <div>
-        <StoreInfo storeInfo={storeInfo} />
+        {storeInfo ? (
+          <StoreInfo storeInfo={storeInfo} />
+        ) : (
+          <StoreInfoSkeleton />
+        )}
       </div>
       <div className={style.menuBar}>
         <button
@@ -128,7 +145,7 @@ const StoreDetail = () => {
         </button>
       </div>
       <div className={style.selectedInfo}>
-        {storeInfo ? (
+        {storeInfo && (
           <>
             {selectedMenuBar === "map" ? (
               <div className={style.kakaoMap}>
@@ -145,18 +162,15 @@ const StoreDetail = () => {
               <Menu storeId={storeInfo.storeId} />
             )}
           </>
-        ) : (
-          <Loading
-            msg={`${
-              selectedMenuBar === "map" ? "가게 위치" : "가게 메뉴"
-            } 정보를 불러오지 못했습니다.`}
-          />
         )}
       </div>
 
       {isPopupOpen && (
         <div className={style.popupOverlay} onClick={closePopup}>
-          <div className={style.popupContent} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={style.popupContent}
+            onClick={(e) => e.stopPropagation()}
+          >
             <img src={popupImage} alt="가게 이미지 확대" />
           </div>
         </div>
