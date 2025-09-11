@@ -9,14 +9,13 @@ import type { StoreResponse } from "../../types/Store";
 import { getStoreInfo } from "../../api/store";
 import Menu from "../Menu/Menu";
 import { toast } from "react-toastify";
-import Loading from "../../components/Loading/Loading";
 import KakaoMap from "../../components/KakaoMap/KakaoMap";
-import MenuSkeleton from "../../components/Skeleton/MenuSkeleton/MenuSkeleton";
 import StoreInfoSkeleton from "../../components/Skeleton/StoreInfoSkeleton/StoreInfoSkeleton";
 
 const StoreDetail = () => {
   const location = useLocation();
   const storeId = location.state?.storeId;
+
   const [storeInfo, setStoreInfo] = useState<StoreResponse>();
   const [imgSlide, setImgSlide] = useState<string[]>([]);
   const [swiper, setSwiper] = useState<SwiperClass>();
@@ -136,7 +135,7 @@ const StoreDetail = () => {
         </button>
       </div>
       <div className={style.selectedInfo}>
-        {storeInfo ? (
+        {storeInfo && (
           <>
             {selectedMenuBar === "map" ? (
               <div className={style.kakaoMap}>
@@ -153,8 +152,6 @@ const StoreDetail = () => {
               <Menu storeId={storeInfo.storeId} />
             )}
           </>
-        ) : (
-          Array.from({ length: 3 }).map((_, idx) => <MenuSkeleton key={idx} />)
         )}
       </div>
 

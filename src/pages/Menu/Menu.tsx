@@ -3,7 +3,6 @@ import type { MenuCategory, MenuInfoResponse } from "../../types/Menu";
 import MenuList from "../../components/MenuList/MenuList";
 import { getMenuCategories, getMenusByCategory } from "../../api/menu";
 import { toast } from "react-toastify";
-import MenuSkeleton from "../../components/Skeleton/MenuSkeleton/MenuSkeleton";
 
 type menuType = {
   storeId: number;
@@ -43,16 +42,15 @@ const Menu = ({ storeId, onMenuClick }: menuType) => {
 
   return (
     <>
-      {loading
-        ? Array.from({ length: 3 }).map((_, idx) => <MenuSkeleton key={idx} />)
-        : categories?.map((category) => (
-            <MenuList
-              key={category.menuCategoryId}
-              menus={menus}
-              category={category}
-              onMenuClick={onMenuClick}
-            />
-          ))}
+      {categories?.map((category) => (
+        <MenuList
+          key={category.menuCategoryId}
+          loading={loading}
+          menus={menus}
+          category={category}
+          onMenuClick={onMenuClick}
+        />
+      ))}{" "}
     </>
   );
 };
