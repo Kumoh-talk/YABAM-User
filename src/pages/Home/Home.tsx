@@ -64,25 +64,25 @@ const Home = () => {
 
       {/* 가게 리스트 */}
       <div className={style.scrollArea}>
-        {isLoading && data.length === 0
-          ? Array.from({ length: 6 }).map((_, idx) => (
-              <StoreSkeleton key={idx} />
-            ))
-          : data.map((store) => (
-              <Link
-                to={"/storeDetail"}
-                key={store.storeId}
-                state={{ storeId: store.storeId }}
-              >
-                <StoreItem
-                  storeName={store.storeName}
-                  isOpened={store.isOpened}
-                  headImageUrl={store.headImageUrl}
-                  description={store.description}
-                  storeInfoImageUrl={store.storeDetailImageUrls || []}
-                />
-              </Link>
-            ))}
+        {data.map((store) => (
+          <Link
+            to={"/storeDetail"}
+            key={store.storeId}
+            state={{ storeId: store.storeId }}
+          >
+            <StoreItem
+              storeName={store.storeName}
+              isOpened={store.isOpened}
+              headImageUrl={store.headImageUrl}
+              description={store.description}
+            />
+          </Link>
+        ))}
+
+        {isLoading &&
+          Array.from({ length: size }).map((_, idx) => (
+            <StoreSkeleton key={idx} />
+          ))}
       </div>
     </div>
   );
