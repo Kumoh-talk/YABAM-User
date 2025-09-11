@@ -1,4 +1,13 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100vh;
+}
+
 header {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   background-color: #f8f9fa;
@@ -43,8 +52,9 @@ header {
 }
 
 main {
-  /* margin-top: 50px; */
   background-color: #ffffff;
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -72,13 +82,12 @@ main {
 }
 
 .floatingButton {
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   right: 20px;
   width: 60px;
-  max-width: 450px;
   height: 60px;
-  background-color: #6299FE;
+  background-color: #6299fe;
   color: white;
   border: none;
   border-radius: 50%;
