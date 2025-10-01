@@ -1,14 +1,19 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home/Home";
 import StoreDetail from "./pages/StoreDetail/StoreDetail";
-import TableValidationPage from "./pages/TableValidationPage/TableValidationPage";
-import OrderMenu from "./pages/OrderMenu/OrderMenu";
-import OrderMenuDetail from "./pages/OrderMenuDetail/OrderMenuDetail";
-import OrderCart from "./pages/OrderCart/OrderCart";
-import OrderStatus from "./pages/OrderStatus/OrderStatus";
-import { ToastContainer } from "react-toastify";
+
+const TableValidationPage = lazy(
+  () => import("./pages/TableValidationPage/TableValidationPage")
+);
+const OrderMenu = lazy(() => import("./pages/OrderMenu/OrderMenu"));
+const OrderMenuDetail = lazy(
+  () => import("./pages/OrderMenuDetail/OrderMenuDetail")
+);
+const OrderCart = lazy(() => import("./pages/OrderCart/OrderCart"));
+const OrderStatus = lazy(() => import("./pages/OrderStatus/OrderStatus"));
 
 function App() {
   function setScreenSize(): void {
@@ -21,18 +26,20 @@ function App() {
   });
 
   return (
-    <div className="container">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/storeDetail" element={<StoreDetail />} />
-        <Route path="/validate-table" element={<TableValidationPage />} />
-        <Route path="/orderMenu" element={<OrderMenu />} />
-        <Route path="/orderMenuDetail" element={<OrderMenuDetail />} />
-        <Route path="/orderCart" element={<OrderCart />} />
-        <Route path="/orderStatus" element={<OrderStatus />} />
-      </Routes>
-      <ToastContainer position="top-center" autoClose={2000} />
-    </div>
+    <Suspense fallback={<div>로딩중...</div>}>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/storeDetail" element={<StoreDetail />} />
+          <Route path="/validate-table" element={<TableValidationPage />} />
+          <Route path="/orderMenu" element={<OrderMenu />} />
+          <Route path="/orderMenuDetail" element={<OrderMenuDetail />} />
+          <Route path="/orderCart" element={<OrderCart />} />
+          <Route path="/orderStatus" element={<OrderStatus />} />
+        </Routes>
+        <ToastContainer position="top-center" autoClose={2000} />
+      </div>
+    </Suspense>
   );
 }
 
