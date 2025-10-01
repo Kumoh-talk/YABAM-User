@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import type { MenuCategory, MenuInfoResponse } from "../../types/Menu";
-import MenuList from "../../components/MenuList/MenuList";
-import { getMenuCategories, getMenusByCategory } from "../../api/menu";
+import type { MenuCategory, MenuInfoResponse } from "../../../types/Menu";
+import MenuList from "../../../components/MenuList/MenuList";
+import { getMenuCategories, getMenusByCategory } from "../../../api/menu";
 import { toast } from "react-toastify";
 
 type menuType = {

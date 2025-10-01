@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { StoreResponse } from "../../types/Store";
 import { getStoreInfo } from "../../api/store";
-import Menu from "../Menu/Menu";
+import Menu from "../common/Menu/Menu";
 import { toast } from "react-toastify";
 import KakaoMap from "../../components/KakaoMap/KakaoMap";
 import StoreInfoSkeleton from "../../components/Skeleton/StoreInfoSkeleton/StoreInfoSkeleton";
