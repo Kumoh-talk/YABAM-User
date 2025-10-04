@@ -5,7 +5,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import type { MenuInfoResponse } from "../../types/Menu"; // MenuCategory 제거
 import { toast } from "react-toastify";
 import CallStaffModal from "../../components/CallStaffModal/CallStaffModal";
-import Menu from "../Menu/Menu";
+import Menu from "../common/Menu/Menu";
 
 const OrderMenu = () => {
   const [searchParams] = useSearchParams();
