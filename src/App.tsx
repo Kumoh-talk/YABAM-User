@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home/Home";
 import StoreDetail from "./pages/StoreDetail/StoreDetail";
+import Loading from "./components/Loading/Loading";
 
 const TableValidationPage = lazy(
   () => import("./pages/TableValidationPage/TableValidationPage")
@@ -26,7 +27,7 @@ function App() {
   });
 
   return (
-    <Suspense fallback={<div>로딩중...</div>}>
+    <Suspense fallback={<Loading msg="로딩중..." />}>
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
