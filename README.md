@@ -9,6 +9,23 @@ https://github.com/user-attachments/assets/1cab8fd7-89d1-4711-9ca3-711762d2f1aa
 
 <br/>
 
+## 사용자 흐름
+```mermaid
+flowchart TD
+  A["주막 목록"] --> B["주막 상세"]
+  B --> C["QR 코드 스캔"]
+  C --> D["미정산 영수증 조회"]
+  D -->|있음| E["메뉴 주문"]
+  D -->|없음| F["영수증 생성"]
+  F --> E
+  E --> G["메뉴 상세"]
+  G --> H["장바구니"]
+  H --> I["주문 생성"]
+  I --> J["주문 현황"]
+  E --> K["직원 호출"]
+```
+<br/>
+
 ## 기술 스택
 ![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=000000)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
